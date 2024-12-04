@@ -178,7 +178,7 @@ FileSelector.addEventListener("change", (event) => {
         canvas_after.width = image_after.width;
         canvas_after.height = image_after.height;
         canvas_after.style.top = image_after.width;
-        canvas_after.style.left = image_after.height;
+        canvas_after.style.left = "2em";
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
             return;
