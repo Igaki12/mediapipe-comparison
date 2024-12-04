@@ -47,6 +47,7 @@ const createPoseLandmarker = async () => {
     demosSection.classList.remove("invisible");
     document.getElementById("loadingMsg").style.display = "none";
     clearInterval(loadingInterval);
+    runPoseEstimation();
 };
 createPoseLandmarker();
 
@@ -74,6 +75,7 @@ canvas_overlay.left = image_before.offsetLeft;
 canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
 // 画像が表示されたら、ポーズ推定を行う
+const runPoseEstimation = () => {
 image_before.onload = () => {
     console.log("image_before.onload");
     if (!poseLandmarker) {
@@ -136,6 +138,7 @@ image_before.onload = () => {
             "右足先 (right foot index)"
         ];
     })};
+};
 
 
 // 手持ちの画像を選択して表示し、ポーズ推定を行う
