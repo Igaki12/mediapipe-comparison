@@ -73,6 +73,7 @@ canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
 // 画像が表示されたら、ポーズ推定を行う
 image_before.onload = () => {
+    console.log("image_before.onload");
     if (!poseLandmarker) {
         console.log("Wait for poseLandmarker to load before clicking!");
         return;
