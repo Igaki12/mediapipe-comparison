@@ -146,9 +146,10 @@ const runPoseEstimation = () => {
         }
 
 
-        console.log("result : ");
-        console.log(result);
+        
         result_before = result;
+        console.log("result_before : ");
+        console.log(result_before);
         document.getElementById("fileSelector").disabled = false;
         document.getElementById("loadingMsg2").innerText = "比較したい画像を選択してください▽";
 
@@ -161,6 +162,7 @@ const runPoseEstimation = () => {
 const FileSelector = document.getElementById("fileSelector");
 const image_after = document.getElementById("selectedImage");
 const canvas_after = document.getElementById("canvas_after");
+const canvas_after_overlay = document.getElementById("canvas_after_overlay");
 
 let result_after = [];
 FileSelector.addEventListener("change", (event) => {
@@ -179,6 +181,11 @@ FileSelector.addEventListener("change", (event) => {
         canvas_after.height = image_after.height;
         canvas_after.style.top = image_after.width;
         canvas_after.style.left = "2em";
+        canvas_after_overlay.width = image_after.width;
+        canvas_after_overlay.height = image_after.height;
+        canvas_after_overlay.style.top = image_after.width;
+        canvas_after_overlay.style.left = "2em";
+
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
             return;
@@ -197,20 +204,23 @@ FileSelector.addEventListener("change", (event) => {
                 });
                 drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
             }
-            if (result_before.length > 0 && result_before.landmarks.length > 0) {
-                for (const landmark of result_before.landmarks) {
-                    drawingUtils_after.drawLandmarks(landmark, {
+            if(result_before.length > 0 && result_before.landmarks.length > 0){
+                const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
+                const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
+                for (const landmark of result_after.landmarks) {
+                    drawingUtils_after_overlay.drawLandmarks(landmark, {
                         radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
-                        color: "orange",
                         lineWidth: 2,
+                        color: "orange",
                     });
-                    drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_after_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
                         { lineWidth: 2, color: "orange" });
                 }
             }
             console.log("canvas_after_result : ");
             console.log(result);
             result_after = result;
+
         });
 
     };
