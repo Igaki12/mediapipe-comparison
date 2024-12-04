@@ -95,8 +95,8 @@ image_before.onload = () => {
         console.log("result : ");
         console.log(result);
         // worldLandmarksを抽出する
-        console.log("worldLandmarks : ");
-        console.log(result.worldLandmarks);
+        console.log("SegmentationMasks: ");
+        console.log(result.segmentationMasks);
         const positionNamesJP = [
             "鼻 (nose)",
             "左目-内側 (left eye - inner)",
