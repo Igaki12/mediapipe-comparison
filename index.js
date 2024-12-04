@@ -70,8 +70,8 @@ const canvas_overlay = document.getElementById("canvas_overlay");
 const canvas_before = document.getElementById("canvas_before");
 canvas_overlay.width = image_before.width;
 canvas_overlay.height = image_before.height;
-canvas_overlay.top = image_before.offsetTop;
-canvas_overlay.left = image_before.offsetLeft;
+canvas_overlay.style.top = image_before.offsetTop;
+canvas_overlay.style.left = image_before.offsetLeft;
 canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
 // 画像が表示されたら、ポーズ推定を行う
