@@ -76,7 +76,7 @@ canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
 // 画像が表示されたら、ポーズ推定を行う
 const runPoseEstimation = () => {
-image_before.onload = () => {
+// image_before.onload = () => {
     console.log("image_before.onload");
     if (!poseLandmarker) {
         console.log("Wait for poseLandmarker to load before clicking!");
@@ -138,7 +138,6 @@ image_before.onload = () => {
             "右足先 (right foot index)"
         ];
     })};
-};
 
 
 // 手持ちの画像を選択して表示し、ポーズ推定を行う
