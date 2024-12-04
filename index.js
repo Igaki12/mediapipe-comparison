@@ -97,6 +97,31 @@ const runPoseEstimation = () => {
             });
             drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
         }
+        // [MPMask$1]
+// 0
+// : 
+// MPMask$1
+// canvas
+// : 
+// OffscreenCanvas {GLctxObject: {…}, width: 1108, height: 1477, getContextSafariWebGL2Fixed: ƒ, getContext: ƒ, …}
+// containers
+// : 
+// [WebGLTexture]
+        const segmentationMasksCanvas = document.createElement("canvas");
+        segmentationMasksCanvas.setAttribute("width", image_before.width);
+        segmentationMasksCanvas.setAttribute("height", image_before.height);
+        segmentationMasksCanvas.style =
+            "left: " + image_before.offsetLeft + "px;" +
+            "top: " + image_before.offsetTop + "px;" +
+            "position: absolute;";
+        document.body.appendChild(segmentationMasksCanvas);
+        const segmentationMasksCanvasCtx = segmentationMasksCanvas.getContext("2d");
+        const segmentationMasksDrawingUtils = new DrawingUtils(segmentationMasksCanvasCtx);
+        for (const segmentationMask of result.segmentationMasks) {
+            segmentationMasksDrawingUtils.drawSegmentationMask(segmentationMask);
+        }
+
+        
         console.log("result : ");
         console.log(result);
         // worldLandmarksを抽出する
