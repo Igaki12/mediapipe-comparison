@@ -87,7 +87,7 @@ const runPoseEstimation = () => {
         runningMode = "IMAGE";
         poseLandmarker.setOptions({ runningMode: "IMAGE" });
     }
-    poseLandmarker.setOptions({ outputSegmentationMasks: true });
+    // poseLandmarker.setOptions({ outputSegmentationMasks: true });
     poseLandmarker.detect(image_before, async (result) => {
         const canvasCtx = canvas_overlay.getContext("2d");
         const drawingUtils = new DrawingUtils(canvasCtx);
