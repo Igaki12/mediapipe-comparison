@@ -207,7 +207,7 @@ FileSelector.addEventListener("change", (event) => {
             if(result_before.length > 0 && result_before.landmarks.length > 0){
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
-                for (const landmark of result_after.landmarks) {
+                for (const landmark of result_before.landmarks) {
                     drawingUtils_after_overlay.drawLandmarks(landmark, {
                         radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
                         lineWidth: 2,
