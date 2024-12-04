@@ -27,10 +27,10 @@ let imageSegmenter;
 // get everything needed to run.
 const loadingInterval = setInterval(() => {
     document.getElementById("loadingMsg").innerHTML += ".";
-    if ( document.getElementById("loadingMsg").innerHTML.length > 25) {
+    if (document.getElementById("loadingMsg").innerHTML.length > 25) {
         document.getElementById("loadingMsg").innerHTML = "モジュールの読み込みに数秒かかります...";
     }
-    },1000);
+}, 1000);
 
 const createPoseLandmarker = async () => {
     const vision = await FilesetResolver.forVisionTasks(
@@ -113,7 +113,7 @@ canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
 // 画像が表示されたら、ポーズ推定を行う
 const runPoseEstimation = () => {
-// image_before.onload = () => {
+    // image_before.onload = () => {
     console.log("image_before.onload");
     if (!poseLandmarker) {
         console.log("Wait for poseLandmarker to load before clicking!");
@@ -145,14 +145,15 @@ const runPoseEstimation = () => {
                 { lineWidth: 2, color: "white" });
         }
 
-        
+
         console.log("result : ");
         console.log(result);
         result_before = result;
         document.getElementById("fileSelector").disabled = false;
         document.getElementById("loadingMsg2").innerText = "比較したい画像を選択してください▽";
 
-    })};
+    })
+};
 
 
 // 手持ちの画像を選択して表示し、ポーズ推定を行う
@@ -160,10 +161,7 @@ const runPoseEstimation = () => {
 const FileSelector = document.getElementById("fileSelector");
 const image_after = document.getElementById("selectedImage");
 const canvas_after = document.getElementById("canvas_after");
-canvas_after.width = image_after.width;
-canvas_after.height = image_after.height;
-canvas_after.style.top = image_after.offsetTop;
-canvas_after.style.left = image_after.offsetLeft;
+
 let result_after = [];
 FileSelector.addEventListener("change", (event) => {
     const file = event.target.files[0];
@@ -177,6 +175,10 @@ FileSelector.addEventListener("change", (event) => {
     reader.readAsDataURL(file);
     // 画像が表示されたら、ポーズ推定を行う
     image_after.onload = () => {
+        canvas_after.width = image_after.width;
+        canvas_after.height = image_after.height;
+        canvas_after.style.top = image_after.width;
+        canvas_after.style.left = image_after.height;
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
             return;
@@ -195,7 +197,7 @@ FileSelector.addEventListener("change", (event) => {
                 });
                 drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
             }
-            if(result_before.length > 0 && result_before.landmarks.length > 0){
+            if (result_before.length > 0 && result_before.landmarks.length > 0) {
                 for (const landmark of result_before.landmarks) {
                     drawingUtils_after.drawLandmarks(landmark, {
                         radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
