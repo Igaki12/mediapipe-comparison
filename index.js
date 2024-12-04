@@ -204,7 +204,7 @@ FileSelector.addEventListener("change", (event) => {
                 });
                 drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
             }
-            if(result_before.length > 0 && result_before.landmarks.length > 0){
+            if(result_before != [] && result_before.landmarks && result_before.landmarks.length > 0){
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
                 for (const landmark of result_before.landmarks) {
