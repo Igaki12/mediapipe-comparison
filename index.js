@@ -158,8 +158,12 @@ const runPoseEstimation = () => {
 // 手持ちの画像を選択して表示し、ポーズ推定を行う
 
 const FileSelector = document.getElementById("fileSelector");
-const SelectedImage = document.getElementById("selectedImage");
+const image_after = document.getElementById("selectedImage");
 const canvas_after = document.getElementById("canvas_after");
+canvas_after.width = image_after.width;
+canvas_after.height = image_after.height;
+canvas_after.style.top = image_after.offsetTop;
+canvas_after.style.left = image_after.offsetLeft;
 let result_after = [];
 FileSelector.addEventListener("change", (event) => {
     const file = event.target.files[0];
@@ -168,11 +172,11 @@ FileSelector.addEventListener("change", (event) => {
     }
     const reader = new FileReader();
     reader.onload = (e) => {
-        SelectedImage.src = e.target.result;
+        image_after.src = e.target.result;
     };
     reader.readAsDataURL(file);
     // 画像が表示されたら、ポーズ推定を行う
-    SelectedImage.onload = () => {
+    image_after.onload = () => {
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
             return;
@@ -182,7 +186,7 @@ FileSelector.addEventListener("change", (event) => {
             runningMode = "IMAGE";
             poseLandmarker.setOptions({ runningMode: "IMAGE" });
         }
-        poseLandmarker.detect(SelectedImage, async (result) => {
+        poseLandmarker.detect(image_after, async (result) => {
             const canvas_afterCtx = canvas_after.getContext("2d");
             const drawingUtils_after = new DrawingUtils(canvas_afterCtx);
             for (const landmark of result.landmarks) {
