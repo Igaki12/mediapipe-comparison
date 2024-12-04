@@ -42,8 +42,9 @@ limitations under the License. -->
     </div>
     <p id="loadingMsg2"></p>
     <input type="file" accept="image/*" id="fileSelector" disabled />
-    <div id="selectedImageDiv"></div>
-    <img id="selectedImage" width="100%" crossorigin="anonymous" title="ここに画像が表示されます" loading="lazy" />
+    <div id="selectedImageDiv">
+      <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
+      <canvas id="canvas_after" width="100%" style="position: absolute; padding: 2em;"></canvas>
     </div>
 
     <table id="worldLandmarksTable">

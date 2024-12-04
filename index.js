@@ -101,6 +101,7 @@ const positionNamesJP = [
 // this class.
 
 // すでにアップされている画像を選択して表示し、ポーズ推定を行う
+let result_before = [];
 const image_before = document.getElementById("image_before");
 const canvas_overlay = document.getElementById("canvas_overlay");
 const canvas_before = document.getElementById("canvas_before");
@@ -131,18 +132,23 @@ const runPoseEstimation = () => {
         const drawingUtils_before = new DrawingUtils(canvas_beforeCtx);
         for (const landmark of result.landmarks) {
             drawingUtils_overlay.drawLandmarks(landmark, {
-                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
+                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                lineWidth: 2,
             });
             drawingUtils_before.drawLandmarks(landmark, {
-                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
+                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                lineWidth: 2,
             });
-            drawingUtils_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
-            drawingUtils_before.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+            drawingUtils_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                { lineWidth: 2, color: "white" });
+            drawingUtils_before.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                { lineWidth: 2, color: "white" });
         }
 
         
         console.log("result : ");
         console.log(result);
+        result_before = result;
         document.getElementById("fileSelector").disabled = false;
         document.getElementById("loadingMsg2").innerText = "比較したい画像を選択してください▽";
 
@@ -153,7 +159,8 @@ const runPoseEstimation = () => {
 
 const FileSelector = document.getElementById("fileSelector");
 const SelectedImage = document.getElementById("selectedImage");
-const worldLandmarksPrint = document.getElementById("worldLandmarksPrint");
+const canvas_after = document.getElementById("canvas_after");
+let result_after = [];
 FileSelector.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (!file) {
@@ -175,73 +182,30 @@ FileSelector.addEventListener("change", (event) => {
             runningMode = "IMAGE";
             poseLandmarker.setOptions({ runningMode: "IMAGE" });
         }
+        poseLandmarker.detect(SelectedImage, async (result) => {
+            const canvas_afterCtx = canvas_after.getContext("2d");
+            const drawingUtils_after = new DrawingUtils(canvas_afterCtx);
+            for (const landmark of result.landmarks) {
+                drawingUtils_after.drawLandmarks(landmark, {
+                    radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
+                });
+                drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+            }
+            if(result_before.length > 0 && result_before.landmarks.length > 0){
+                for (const landmark of result_before.landmarks) {
+                    drawingUtils_after.drawLandmarks(landmark, {
+                        radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                        color: "orange",
+                        lineWidth: 2,
+                    });
+                    drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                        { lineWidth: 2, color: "orange" });
+                }
+            }
+            console.log("canvas_after_result : ");
+            console.log(result);
+            result_after = result;
+        });
 
-        // segmentationMaskを有効にする
-        // poseLandmarker.setOptions({ outputSegmentationMasks: true });
-        // poseLandmarker.detect(SelectedImage, async (result) => {
-        //     const canvas = document.createElement("canvas");
-        //     canvas.setAttribute("class", "canvas");
-        //     canvas.setAttribute("width", SelectedImage.naturalWidth + "px");
-        //     canvas.setAttribute("height", SelectedImage.naturalHeight + "px");
-        //     canvas.style =
-        //         "left: " + SelectedImage.offsetLeft + "px;" +
-        //         "top: " + SelectedImage.offsetTop + "px;" +
-        //         "width: " +
-        //         SelectedImage.width +
-        //         "px;" +
-        //         "height: " +
-        //         SelectedImage.height +
-        //         "px;";
-
-        //     SelectedImage.parentNode.appendChild(canvas);
-        //     const canvasCtx = canvas.getContext("2d");
-        //     const drawingUtils = new DrawingUtils(canvasCtx);
-        //     for (const landmark of result.landmarks) {
-        //         drawingUtils.drawLandmarks(landmark, {
-        //             radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
-        //         });
-        //         drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
-        //     }
-        //     console.log("result : ");
-        //     console.log(result);
-        //     // worldLandmarksを抽出する
-        //     console.log("worldLandmarks : ");
-        //     console.log(result.worldLandmarks);
-        //     const positionNamesJP = [
-        //         "鼻 (nose)",
-        //         "左目-内側 (left eye - inner)",
-        //         "左目 (left eye)",
-        //         "左目-外側 (left eye - outer)",
-        //         "右目-内側 (right eye - inner)",
-        //         "右目 (right eye)",
-        //         "右目-外側 (right eye - outer)",
-        //         "左耳 (left ear)",
-        //         "右耳 (right ear)",
-        //         "口-左縁 (mouth - left)",
-        //         "口-右縁 (mouth - right)",
-        //         "左肩 (left shoulder)",
-        //         "右肩 (right shoulder)",
-        //         "左肘 (left elbow)",
-        //         "右肘 (right elbow)",
-        //         "左手首 (left wrist)",
-        //         "右手首 (right wrist)",
-        //         "左小指 (left pinky)",
-        //         "右小指 (right pinky)",
-        //         "左人差し指 (left index)",
-        //         "右人差し指 (right index)",
-        //         "左親指 (left thumb)",
-        //         "右親指 (right thumb)",
-        //         "左腰 (left hip)",
-        //         "右腰 (right hip)",
-        //         "左膝 (left knee)",
-        //         "右膝 (right knee)",
-        //         "左足首 (left ankle)",
-        //         "右足首 (right ankle)",
-        //         "左かかと (left heel)",
-        //         "右かかと (right heel)",
-        //         "左足先 (left foot index)",
-        //         "右足先 (right foot index)"
-        //     ];
-        // });
     };
 });
