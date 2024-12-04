@@ -69,10 +69,12 @@ const canvas_overlay = document.getElementById("canvas_overlay");
 const canvas_before = document.getElementById("canvas_before");
 canvas_overlay.width = image_before.width;
 canvas_overlay.height = image_before.height;
+canvas_overlay.top = image_before.offsetTop;
+canvas_overlay.left = image_before.offsetLeft;
 canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
 // 画像が表示されたら、ポーズ推定を行う
-document.onload = () => {
+// document.onload = () => {
     console.log("image_before.onload");
     if (!poseLandmarker) {
         console.log("Wait for poseLandmarker to load before clicking!");
@@ -133,7 +135,8 @@ document.onload = () => {
             "左足先 (left foot index)",
             "右足先 (right foot index)"
         ];
-    })};
+    })
+// };
 
 
 // 手持ちの画像を選択して表示し、ポーズ推定を行う
