@@ -51,6 +51,42 @@ const createPoseLandmarker = async () => {
 };
 createPoseLandmarker();
 
+const positionNamesJP = [
+    "鼻 (nose)",
+    "左目-内側 (left eye - inner)",
+    "左目 (left eye)",
+    "左目-外側 (left eye - outer)",
+    "右目-内側 (right eye - inner)",
+    "右目 (right eye)",
+    "右目-外側 (right eye - outer)",
+    "左耳 (left ear)",
+    "右耳 (right ear)",
+    "口-左縁 (mouth - left)",
+    "口-右縁 (mouth - right)",
+    "左肩 (left shoulder)",
+    "右肩 (right shoulder)",
+    "左肘 (left elbow)",
+    "右肘 (right elbow)",
+    "左手首 (left wrist)",
+    "右手首 (right wrist)",
+    "左小指 (left pinky)",
+    "右小指 (right pinky)",
+    "左人差し指 (left index)",
+    "右人差し指 (right index)",
+    "左親指 (left thumb)",
+    "右親指 (right thumb)",
+    "左腰 (left hip)",
+    "右腰 (right hip)",
+    "左膝 (left knee)",
+    "右膝 (right knee)",
+    "左足首 (left ankle)",
+    "右足首 (right ankle)",
+    "左かかと (left heel)",
+    "右かかと (right heel)",
+    "左足先 (left foot index)",
+    "右足先 (right foot index)"
+];
+
 
 
 
@@ -107,41 +143,9 @@ const runPoseEstimation = () => {
         
         console.log("result : ");
         console.log(result);
-        const positionNamesJP = [
-            "鼻 (nose)",
-            "左目-内側 (left eye - inner)",
-            "左目 (left eye)",
-            "左目-外側 (left eye - outer)",
-            "右目-内側 (right eye - inner)",
-            "右目 (right eye)",
-            "右目-外側 (right eye - outer)",
-            "左耳 (left ear)",
-            "右耳 (right ear)",
-            "口-左縁 (mouth - left)",
-            "口-右縁 (mouth - right)",
-            "左肩 (left shoulder)",
-            "右肩 (right shoulder)",
-            "左肘 (left elbow)",
-            "右肘 (right elbow)",
-            "左手首 (left wrist)",
-            "右手首 (right wrist)",
-            "左小指 (left pinky)",
-            "右小指 (right pinky)",
-            "左人差し指 (left index)",
-            "右人差し指 (right index)",
-            "左親指 (left thumb)",
-            "右親指 (right thumb)",
-            "左腰 (left hip)",
-            "右腰 (right hip)",
-            "左膝 (left knee)",
-            "右膝 (right knee)",
-            "左足首 (left ankle)",
-            "右足首 (right ankle)",
-            "左かかと (left heel)",
-            "右かかと (right heel)",
-            "左足先 (left foot index)",
-            "右足先 (right foot index)"
-        ];
+        document.getElementById("fileSelector").disabled = false;
+        document.getElementById("loadingMsg2").innerText = "比較したい画像を選択してください▽";
+
     })};
 
 
