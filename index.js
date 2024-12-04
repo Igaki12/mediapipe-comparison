@@ -71,6 +71,68 @@ canvas_overlay.width = image_before.width;
 canvas_overlay.height = image_before.height;
 canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
+// 画像が表示されたら、ポーズ推定を行う
+image_before.onload = () => {
+    if (!poseLandmarker) {
+        console.log("Wait for poseLandmarker to load before clicking!");
+        return;
+    }
+
+    if (runningMode === "VIDEO") {
+        runningMode = "IMAGE";
+        poseLandmarker.setOptions({ runningMode: "IMAGE" });
+    }
+    poseLandmarker.setOptions({ outputSegmentationMasks: true });
+    poseLandmarker.detect(image_before, async (result) => {
+        const canvasCtx = canvas_overlay.getContext("2d");
+        const drawingUtils = new DrawingUtils(canvasCtx);
+        for (const landmark of result.landmarks) {
+            drawingUtils.drawLandmarks(landmark, {
+                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
+            });
+            drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+        }
+        console.log("result : ");
+        console.log(result);
+        // worldLandmarksを抽出する
+        console.log("worldLandmarks : ");
+        console.log(result.worldLandmarks);
+        const positionNamesJP = [
+            "鼻 (nose)",
+            "左目-内側 (left eye - inner)",
+            "左目 (left eye)",
+            "左目-外側 (left eye - outer)",
+            "右目-内側 (right eye - inner)",
+            "右目 (right eye)",
+            "右目-外側 (right eye - outer)",
+            "左耳 (left ear)",
+            "右耳 (right ear)",
+            "口-左縁 (mouth - left)",
+            "口-右縁 (mouth - right)",
+            "左肩 (left shoulder)",
+            "右肩 (right shoulder)",
+            "左肘 (left elbow)",
+            "右肘 (right elbow)",
+            "左手首 (left wrist)",
+            "右手首 (right wrist)",
+            "左小指 (left pinky)",
+            "右小指 (right pinky)",
+            "左人差し指 (left index)",
+            "右人差し指 (right index)",
+            "左親指 (left thumb)",
+            "右親指 (right thumb)",
+            "左腰 (left hip)",
+            "右腰 (right hip)",
+            "左膝 (left knee)",
+            "右膝 (right knee)",
+            "左足首 (left ankle)",
+            "右足首 (right ankle)",
+            "左かかと (left heel)",
+            "右かかと (right heel)",
+            "左足先 (left foot index)",
+            "右足先 (right foot index)"
+        ];
+    })};
 
 
 // 手持ちの画像を選択して表示し、ポーズ推定を行う
@@ -99,6 +161,7 @@ FileSelector.addEventListener("change", (event) => {
             runningMode = "IMAGE";
             poseLandmarker.setOptions({ runningMode: "IMAGE" });
         }
+
         // segmentationMaskを有効にする
         // poseLandmarker.setOptions({ outputSegmentationMasks: true });
         // poseLandmarker.detect(SelectedImage, async (result) => {
