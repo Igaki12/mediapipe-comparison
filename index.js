@@ -89,21 +89,24 @@ const runPoseEstimation = () => {
     }
     // poseLandmarker.setOptions({ outputSegmentationMasks: true });
     poseLandmarker.detect(image_before, async (result) => {
-        const canvasCtx = canvas_overlay.getContext("2d");
-        const drawingUtils = new DrawingUtils(canvasCtx);
+        const canvas_overlayCtx = canvas_overlay.getContext("2d");
+        const canvas_beforeCtx = canvas_before.getContext("2d");
+        const drawingUtils_overlay = new DrawingUtils(canvas_overlayCtx);
+        const drawingUtils_before = new DrawingUtils(canvas_beforeCtx);
         for (const landmark of result.landmarks) {
-            drawingUtils.drawLandmarks(landmark, {
+            drawingUtils_overlay.drawLandmarks(landmark, {
                 radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
             });
-            drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+            drawingUtils_before.drawLandmarks(landmark, {
+                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
+            });
+            drawingUtils_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+            drawingUtils_before.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
         }
 
         
         console.log("result : ");
         console.log(result);
-        // worldLandmarksを抽出する
-        console.log("SegmentationMasks: ");
-        console.log(result.segmentationMasks);
         const positionNamesJP = [
             "鼻 (nose)",
             "左目-内側 (left eye - inner)",
