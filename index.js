@@ -198,10 +198,9 @@ FileSelector.addEventListener("change", (event) => {
             for (const landmark of result.landmarks) {
                 drawingUtils_after.drawLandmarks(landmark, {
                     radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
-                    color: "orange",
+                    // color: "orange",
                 });
-                drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
-                    { lineWidth: 2 , color: "orange"});
+                drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);   
             }
             if (result.landmarks.length === 0 || result.landmarks[0] == undefined || result.landmarks[0].length < 32 ){
                 // この後の処理を行わない
@@ -252,19 +251,35 @@ FileSelector.addEventListener("change", (event) => {
                     drawingUtils_after_overlay.drawLandmarks(landmark_from_ankle_center_before, {
                         radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
                         lineWidth: 2,
-                        // color: "orange",
+                        color: "orange",
                     });
                     drawingUtils_after_overlay.drawConnectors(landmark_from_ankle_center_before, PoseLandmarker.POSE_CONNECTIONS,
-                        { lineWidth: 2 });
+                        { lineWidth: 2 ,color: "orange"});
 
+                    document.getElementById("checkbox_before").addEventListener("change", () => {
+                        if (document.getElementById("checkbox_before").checked) {
+                            canvas_after_overlay.style.display = "block";
+                        } else {
+                            canvas_after_overlay.style.display = "none";
+                        }
+                    });
+                    document.getElementById("checkbox_after").addEventListener("change", () => {
+                        if (document.getElementById("checkbox_after").checked) {
+                            canvas_after.style.display = "block";
+                        } else {
+                            canvas_after.style.display = "none";
+                        }
+                    });
 
-                    // drawingUtils_after_overlay.drawLandmarks(landmark, {
-                    //     radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
-                    //     lineWidth: 2,
-                    //     color: "orange",
-                    // });
-                    // drawingUtils_after_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
-                    //     { lineWidth: 2, color: "orange" });
+                    // 1秒おきに3回点滅させる
+                    let count = 0;
+                    const setLayerInterval = setInterval(() => {
+                        count++;
+                        if (count > 6) {
+                            clearInterval(setLayerInterval);
+                        }
+                        canvas_after_overlay.style.display = canvas_after_overlay.style.display === "none" ? "block" : "none";
+                    }, 1000);
                 }
             }
             console.log("canvas_after_result : ");
