@@ -49,10 +49,19 @@ limitations under the License. -->
       <canvas id="canvas_after_overlay" width="100%" style="position: absolute; "></canvas>
     </div>
     <!-- checkboxのリスト -->
-    <div id="checkboxes" style="display: flex; justify-content: left; gap: 5px; flex-wrap: wrap; background-color: #007f8b;">
-      <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox_before" checked value="姿勢予測(前)" />
-      <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox_after" checked value="姿勢予測(後)" />
-    </div>
+    <fieldset>
+      <legend>レイヤ表示</legend>
+    
+      <div>
+        <input type="checkbox" id="checkbox_before" name="checkbox_before" checked />
+        <label for="checkbox_before">姿勢予測(前)</label>
+      </div>
+    
+      <div>
+        <input type="checkbox" id="checkbox_after" name="checkbox_after" checked />
+        <label for="checkbox_after">姿勢予測(後)</label>
+      </div>
+    </fieldset>
 
     <table id="worldLandmarksTable">
       <tr>

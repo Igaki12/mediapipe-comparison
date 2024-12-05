@@ -154,6 +154,13 @@ input[type="file"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-/* .mdc-checkbox__native-control {
-  border-color: #007f8b;
-} */
+p,
+label {
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
+}
+
+input {
+  margin: 0.4rem;
+}

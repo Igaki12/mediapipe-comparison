@@ -275,7 +275,7 @@ FileSelector.addEventListener("change", (event) => {
                     let count = 0;
                     const setLayerInterval = setInterval(() => {
                         count++;
-                        if (count > 6) {
+                        if (count > 7) {
                             clearInterval(setLayerInterval);
                         }
                         canvas_after_overlay.style.display = canvas_after_overlay.style.display === "none" ? "" : "none";
