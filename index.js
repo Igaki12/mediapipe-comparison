@@ -276,6 +276,7 @@ FileSelector.addEventListener("change", (event) => {
                     }, 7000);
 
                     // 1秒おきに3回点滅させる
+                    let count = 0;
                     const setLayerInterval = setInterval(() => {
                         count++;
                         if (count > 7) {
