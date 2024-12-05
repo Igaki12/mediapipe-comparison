@@ -258,16 +258,16 @@ FileSelector.addEventListener("change", (event) => {
 
                     document.getElementById("checkbox_before").addEventListener("change", () => {
                         if (document.getElementById("checkbox_before").checked) {
-                            canvas_after_overlay.style.display = "";
+                            canvas_after_overlay.style.opacity = 1;
                         } else {
-                            canvas_after_overlay.style.display = "none";
+                            canvas_after_overlay.style.opacity = 0;
                         }
                     });
                     document.getElementById("checkbox_after").addEventListener("change", () => {
                         if (document.getElementById("checkbox_after").checked) {
-                            canvas_after.style.display = "";
+                            canvas_after.style.opacity = 1;
                         } else {
-                            canvas_after.style.display = "none";
+                            canvas_after.style.opacity = 0;
                         }
                     });
                     setTimeout(() => {

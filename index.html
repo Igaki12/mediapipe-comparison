@@ -45,8 +45,9 @@ limitations under the License. -->
     <input type="file" accept="image/*" id="fileSelector" disabled />
     <div id="selectedImageDiv">
       <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
-      <canvas id="canvas_after" width="100%" style="position: absolute; "></canvas>
+      <canvas id="canvas_after" width="100%" style="position: absolute; transition: opacity 1s;"></canvas>
       <canvas id="canvas_after_overlay" width="100%" style="position: absolute; transition: opacity 1s;"></canvas>
+      <canvas id="canvas_auxiliary" width="100%" style="position: absolute; transition: opacity 1s;"></canvas>
     </div>
     <!-- checkboxのリスト -->
     <fieldset id="checkboxes" style="display: none; justify-content: left; gap: 1em; border: 1px solid #007f8b; margin-bottom: 10px; margin-top: 0px; flex-wrap: wrap;">
