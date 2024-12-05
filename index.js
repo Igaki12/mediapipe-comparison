@@ -86,11 +86,6 @@ const positionNamesJP = [
     "左足先 (left foot index)",
     "右足先 (right foot index)"
 ];
-
-
-
-
-
 /********************************************************************
 // Demo 1: Grab a bunch of images from the page and detection them
 // upon click.
@@ -146,7 +141,7 @@ const runPoseEstimation = () => {
         }
 
 
-        
+
         result_before = result;
         console.log("result_before : ");
         console.log(result_before);
@@ -198,23 +193,74 @@ FileSelector.addEventListener("change", (event) => {
         poseLandmarker.detect(image_after, async (result) => {
             const canvas_afterCtx = canvas_after.getContext("2d");
             const drawingUtils_after = new DrawingUtils(canvas_afterCtx);
+
+
             for (const landmark of result.landmarks) {
                 drawingUtils_after.drawLandmarks(landmark, {
                     radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
                 });
                 drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
             }
-            if(result_before != [] && result_before.landmarks && result_before.landmarks.length > 0){
+            if (landmark == undefined && landmark.length <32) {
+                // この後の処理を行わない
+                return;
+            }
+            const left_ankle = landmark[27];
+            const right_ankle = landmark[28];
+            const ankle_center = {
+                x: (left_ankle.x + right_ankle.x) / 2,
+                y: (left_ankle.y + right_ankle.y) / 2,
+                z: (left_ankle.z + right_ankle.z) / 2
+            };
+            console.log("ankle_center_after : ");
+            console.log(ankle_center);
+            // 鼻から足首の中点までの距離(身長に対応する長さ)を求める *Z座標は使わない
+            const nose = landmark[0];
+            const nose_to_ankle_center_XY = Math.sqrt((nose.x - ankle_center.x) ** 2 + (nose.y - ankle_center.y) ** 2);
+            if (result_before != [] && result_before.landmarks && result_before.landmarks.length > 0) {
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
                 for (const landmark of result_before.landmarks) {
-                    drawingUtils_after_overlay.drawLandmarks(landmark, {
+                    // 足首の中点の座標を求める
+                    const left_ankle_before = landmark[27];
+                    const right_ankle_before = landmark[28];
+                    const ankle_center_before = {
+                        x: (left_ankle_before.x + right_ankle_before.x) / 2,
+                        y: (left_ankle_before.y + right_ankle_before.y) / 2,
+                        z: (left_ankle_before.z + right_ankle_before.z) / 2
+                    };
+                    console.log("ankle_center_before : ");
+                    console.log(ankle_center_before);
+                    // 鼻から足首の中点までの距離(身長に対応する長さ)を求める
+                    const nose_before = landmark[0];
+                    const nose_to_ankle_center_XY_before = Math.sqrt((nose_before.x - ankle_center_before.x) ** 2 + (nose_before.y - ankle_center_before.y) ** 2);
+                    // 身長の比を求める
+                    const height_ratio = nose_to_ankle_center_XY / nose_to_ankle_center_XY_before;
+                    // before各座標の、足首の中点を基準にして、身長比をかけ、afterの座標に変換する
+                    const landmark_from_ankle_center_before = landmark.map((point) => {
+                        return {
+                            x: (point.x - ankle_center_before.x) * height_ratio + ankle_center.x,
+                            y: (point.y - ankle_center_before.y) * height_ratio + ankle_center.y,
+                            z: (point.z - ankle_center_before.z) * height_ratio + ankle_center.z
+                        };
+                    });
+                    // 変換後の座標を描画する
+                    drawingUtils_after_overlay.drawLandmarks(landmark_from_ankle_center_before, {
                         radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
                         lineWidth: 2,
                         color: "orange",
                     });
-                    drawingUtils_after_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_after_overlay.drawConnectors(landmark_from_ankle_center_before, PoseLandmarker.POSE_CONNECTIONS,
                         { lineWidth: 2, color: "orange" });
+
+
+                    // drawingUtils_after_overlay.drawLandmarks(landmark, {
+                    //     radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                    //     lineWidth: 2,
+                    //     color: "orange",
+                    // });
+                    // drawingUtils_after_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                    //     { lineWidth: 2, color: "orange" });
                 }
             }
             console.log("canvas_after_result : ");
