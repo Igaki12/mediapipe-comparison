@@ -201,7 +201,7 @@ FileSelector.addEventListener("change", (event) => {
                 });
                 drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
             }
-            if (result.landmarks.length === 0 || result.landmarks[0] != undefined || result.landmarks[0].length < 32) {
+            if (result.landmarks.length === 0 || result.landmarks[0] == undefined || result.landmarks[0].length < 32 ){
                 // この後の処理を行わない
                 console.log("landmarks is empty");
                 return;
