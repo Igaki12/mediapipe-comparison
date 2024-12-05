@@ -197,9 +197,11 @@ FileSelector.addEventListener("change", (event) => {
 
             for (const landmark of result.landmarks) {
                 drawingUtils_after.drawLandmarks(landmark, {
-                    radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1)
+                    radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                    color: "orange",
                 });
-                drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+                drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                    { lineWidth: 2 , color: "orange"});
             }
             if (result.landmarks.length === 0 || result.landmarks[0] == undefined || result.landmarks[0].length < 32 ){
                 // この後の処理を行わない
@@ -218,7 +220,7 @@ FileSelector.addEventListener("change", (event) => {
             // 鼻から足首の中点までの距離(身長に対応する長さ)を求める *Z座標は使わない
             const nose = result.landmarks[0][0];
             const nose_to_ankle_center_XY = Math.sqrt((nose.x - ankle_center.x) ** 2 + (nose.y - ankle_center.y) ** 2);
-            
+
             if (result_before != [] && result_before.landmarks && result_before.landmarks.length > 0) {
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
@@ -250,10 +252,10 @@ FileSelector.addEventListener("change", (event) => {
                     drawingUtils_after_overlay.drawLandmarks(landmark_from_ankle_center_before, {
                         radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
                         lineWidth: 2,
-                        color: "orange",
+                        // color: "orange",
                     });
                     drawingUtils_after_overlay.drawConnectors(landmark_from_ankle_center_before, PoseLandmarker.POSE_CONNECTIONS,
-                        { lineWidth: 2, color: "orange" });
+                        { lineWidth: 2 });
 
 
                     // drawingUtils_after_overlay.drawLandmarks(landmark, {
