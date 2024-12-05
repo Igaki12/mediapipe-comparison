@@ -220,7 +220,25 @@ FileSelector.addEventListener("change", (event) => {
             const nose = result.landmarks[0][0];
             const nose_to_ankle_center_XY = Math.sqrt((nose.x - ankle_center.x) ** 2 + (nose.y - ankle_center.y) ** 2);
 
-            if (result_before != [] && result_before.landmarks && result_before.landmarks.length > 0) {
+            // 正中線を描画する
+            const canvas_auxiliary = document.getElementById("canvas_auxiliary");
+            const canvas_auxiliaryCtx = canvas_auxiliary.getContext("2d");
+            const drawingUtils_auxiliary = new DrawingUtils(canvas_auxiliaryCtx);
+            const shoulder_center = {
+                x: (result.landmarks[0][11].x + result.landmarks[0][12].x) / 2,
+                y: (result.landmarks[0][11].y + result.landmarks[0][12].y) / 2,
+                z: (result.landmarks[0][11].z + result.landmarks[0][12].z) / 2
+            }
+            drawingUtils_auxiliary.drawLandmarks([ankle_center, shoulder_center], {
+                radius: 3,
+            });
+            drawingUtils_auxiliary.drawConnectors([ankle_center, shoulder_center], {
+                lineWidth: 2,
+            });
+
+
+
+            if (result_before != [] && result_before.landmarks && result_before.landmarks.length > 32) {
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
                 for (const landmark of result_before.landmarks) {
@@ -256,24 +274,40 @@ FileSelector.addEventListener("change", (event) => {
                     drawingUtils_after_overlay.drawConnectors(landmark_from_ankle_center_before, PoseLandmarker.POSE_CONNECTIONS,
                         { lineWidth: 2 ,color: "orange"});
 
+                    // 補助線を描画する
+                    const shoulder_center_before = {
+                        x: (landmark_from_ankle_center_before[11].x + landmark_from_ankle_center_before[12].x) / 2,
+                        y: (landmark_from_ankle_center_before[11].y + landmark_from_ankle_center_before[12].y) / 2,
+                        z: (landmark_from_ankle_center_before[11].z + landmark_from_ankle_center_before[12].z) / 2
+                    }
+                    drawingUtils_auxiliary.drawLandmarks([ankle_center_before, shoulder_center_before], {
+                        radius: 3,
+                        color: "orange",
+                    });
+                    drawingUtils_auxiliary.drawConnectors([ankle_center_before, shoulder_center_before], {
+                        lineWidth: 2,
+                        color: "orange",
+                    });
+
+
                     document.getElementById("checkbox_before").addEventListener("change", () => {
                         if (document.getElementById("checkbox_before").checked) {
-                            canvas_after_overlay.style.opacity = 1;
-                        } else {
                             canvas_after_overlay.style.opacity = 0;
+                        } else {
+                            canvas_after_overlay.style.opacity = 1;
                         }
                     });
                     document.getElementById("checkbox_after").addEventListener("change", () => {
                         if (document.getElementById("checkbox_after").checked) {
-                            canvas_after.style.opacity = 1;
-                        } else {
                             canvas_after.style.opacity = 0;
+                        } else {
+                            canvas_after.style.opacity = 1;
                         }
                     });
                     setTimeout(() => {
                         document.getElementById("checkboxes").style.display = "flex";
-                        canvas_after_overlay.style.opacity = 1;
-                    }, 7000);
+                        canvas_after_overlay.style.opacity = 0;
+                    }, 8000);
 
                     // 1秒おきに3回点滅させる
                     let count = 0;
@@ -282,7 +316,7 @@ FileSelector.addEventListener("change", (event) => {
                         if (count > 7) {
                             clearInterval(setLayerInterval);
                         }
-                        canvas_after_overlay.style.opacity = count % 2;
+                        canvas_after_overlay.style.opacity = 1 - canvas_after_overlay.style.opacity;
                     }, 1000);
                 }
             }
