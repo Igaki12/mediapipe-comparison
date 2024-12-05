@@ -236,8 +236,8 @@ FileSelector.addEventListener("change", (event) => {
             drawingUtils_auxiliary.drawLandmarks([ankle_center, shoulder_center], {
                 radius: 3,
             });
-            drawingUtils_auxiliary.drawConnectors([ankle_center, shoulder_center], poseLandmarker.POSE_CONNECTIONS,
-                { lineWidth: 2 });
+            // drawingUtils_auxiliary.drawConnectors([ankle_center, shoulder_center], poseLandmarker.POSE_CONNECTIONS,
+            //     { lineWidth: 2 });
 
 
 
@@ -287,11 +287,11 @@ FileSelector.addEventListener("change", (event) => {
                         radius: 3,
                         color: "orange",
                     });
-                    drawingUtils_auxiliary.drawConnectors([ankle_center_before, shoulder_center_before], poseLandmarker.POSE_CONNECTIONS,
-                        {
-                        lineWidth: 2,
-                        color: "orange",
-                    });
+                    // drawingUtils_auxiliary.drawConnectors([ankle_center_before, shoulder_center_before], poseLandmarker.POSE_CONNECTIONS,
+                    //     {
+                    //     lineWidth: 2,
+                    //     color: "orange",
+                    // });
 
 
                     document.getElementById("checkbox_before").addEventListener("change", () => {
