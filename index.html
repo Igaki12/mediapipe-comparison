@@ -46,15 +46,17 @@ limitations under the License. -->
     <div id="selectedImageDiv">
       <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
       <canvas id="canvas_after" width="100%" style="position: absolute; "></canvas>
-      <canvas id="canvas_after_overlay" width="100%" style="position: absolute; "></canvas>
+      <canvas id="canvas_after_overlay" width="100%" style="position: absolute; transition: opacity 1s;"></canvas>
     </div>
     <!-- checkboxのリスト -->
     <fieldset id="checkboxes" style="display: none; justify-content: left; gap: 1em; border: 1px solid #007f8b;">
       <legend>レイヤ表示</legend>
     
       <div>
-        <input type="checkbox" id="checkbox_before" name="checkbox_before" checked />
-        <label for="checkbox_before" style="background-color: orange;">姿勢予測(前)</label>
+        <!-- checkboxの背景色をオレンジにする -->
+        <input type="checkbox" id="checkbox_before" name="checkbox_before" checked style="background-color: orange;" />
+
+        <label for="checkbox_before">姿勢予測(前)</label>
       </div>
     
       <div>
