@@ -206,8 +206,8 @@ FileSelector.addEventListener("change", (event) => {
                 console.log("landmarks is empty");
                 return;
             }
-            const left_ankle = landmark[27];
-            const right_ankle = landmark[28];
+            const left_ankle = result.landmarks[0][27];
+            const right_ankle = result.landmarks[0][28];
             const ankle_center = {
                 x: (left_ankle.x + right_ankle.x) / 2,
                 y: (left_ankle.y + right_ankle.y) / 2,
@@ -216,8 +216,9 @@ FileSelector.addEventListener("change", (event) => {
             console.log("ankle_center_after : ");
             console.log(ankle_center);
             // 鼻から足首の中点までの距離(身長に対応する長さ)を求める *Z座標は使わない
-            const nose = landmark[0];
+            const nose = result.landmarks[0][0];
             const nose_to_ankle_center_XY = Math.sqrt((nose.x - ankle_center.x) ** 2 + (nose.y - ankle_center.y) ** 2);
+            
             if (result_before != [] && result_before.landmarks && result_before.landmarks.length > 0) {
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
