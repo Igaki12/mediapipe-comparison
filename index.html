@@ -35,6 +35,7 @@ limitations under the License. -->
     <h2>Comparison:<br>2枚の画像のPoseを比較</h2>
     <p>あなたの画像をアップロードして、以前の画像と姿勢を比較することができます</p>
     <p>推奨環境：Google Chrome</p>
+    <p>以前の画像(サンプル画像　/　比較元)▽</p>
     <div style="display: flex; justify-content: center; gap: 0px; margin-left: -2em; margin-right: -2em;">
       <img src="./sample.jpg" id="image_before" width="50%" style="position: block; background-color: #007f8b;">
       <canvas id="canvas_overlay" width="50%" style="position: absolute; "></canvas>
@@ -46,6 +47,12 @@ limitations under the License. -->
       <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
       <canvas id="canvas_after" width="100%" style="position: absolute; "></canvas>
       <canvas id="canvas_after_overlay" width="100%" style="position: absolute; "></canvas>
+    </div>
+    <!-- checkboxのリスト -->
+    <div id="checkboxes"
+      style="display: flex; justify-content: left; gap: 5px; flex-wrap: wrap; background-color: #007f8b;">
+      <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox_before" checked value="姿勢予測(前)" />
+      <input type="checkbox" class="mdc-checkbox__native-control" id="checkbox_after" checked value="姿勢予測(後)" />
     </div>
 
     <table id="worldLandmarksTable">

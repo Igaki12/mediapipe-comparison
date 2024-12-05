@@ -154,3 +154,7 @@ input[type="file"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+.mdc-checkbox__native-control {
+  border-color: #007f8b;
+  
+}
