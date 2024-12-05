@@ -270,16 +270,20 @@ FileSelector.addEventListener("change", (event) => {
                             canvas_after.style.display = "none";
                         }
                     });
+                    setTimeout(() => {
+                        document.getElementById("checkboxes").style.display = "flex";
+                        canvas_after_overlay.style.opacity = 0;
+                    }, 7000);
 
                     // 1秒おきに3回点滅させる
-                    let count = 0;
-                    const setLayerInterval = setInterval(() => {
-                        count++;
-                        if (count > 7) {
-                            clearInterval(setLayerInterval);
-                        }
-                        canvas_after_overlay.style.display = canvas_after_overlay.style.display === "none" ? "" : "none";
-                    }, 1000);
+                    canvas_after_overlay.style.transition = "opacity 1s";
+                    // const setLayerInterval = setInterval(() => {
+                    //     count++;
+                    //     if (count > 7) {
+                    //         clearInterval(setLayerInterval);
+                    //     }
+                    //     canvas_after_overlay.style.display = canvas_after_overlay.style.display === "none" ? "" : "none";
+                    // }, 1000);
                 }
             }
             console.log("canvas_after_result : ");
