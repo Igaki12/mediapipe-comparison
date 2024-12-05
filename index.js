@@ -222,6 +222,10 @@ FileSelector.addEventListener("change", (event) => {
 
             // 正中線を描画する
             const canvas_auxiliary = document.getElementById("canvas_auxiliary");
+            canvas_auxiliary.width = image_after.width;
+            canvas_auxiliary.height = image_after.height;
+            canvas_auxiliary.style.top = image_after.width;
+            canvas_auxiliary.style.left = "2em";
             const canvas_auxiliaryCtx = canvas_auxiliary.getContext("2d");
             const drawingUtils_auxiliary = new DrawingUtils(canvas_auxiliaryCtx);
             const shoulder_center = {
