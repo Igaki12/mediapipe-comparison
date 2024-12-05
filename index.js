@@ -258,14 +258,14 @@ FileSelector.addEventListener("change", (event) => {
 
                     document.getElementById("checkbox_before").addEventListener("change", () => {
                         if (document.getElementById("checkbox_before").checked) {
-                            canvas_after_overlay.style.display = "block";
+                            canvas_after_overlay.style.display = "";
                         } else {
                             canvas_after_overlay.style.display = "none";
                         }
                     });
                     document.getElementById("checkbox_after").addEventListener("change", () => {
                         if (document.getElementById("checkbox_after").checked) {
-                            canvas_after.style.display = "block";
+                            canvas_after.style.display = "";
                         } else {
                             canvas_after.style.display = "none";
                         }
@@ -278,7 +278,7 @@ FileSelector.addEventListener("change", (event) => {
                         if (count > 6) {
                             clearInterval(setLayerInterval);
                         }
-                        canvas_after_overlay.style.display = canvas_after_overlay.style.display === "none" ? "block" : "none";
+                        canvas_after_overlay.style.display = canvas_after_overlay.style.display === "none" ? "" : "none";
                     }, 1000);
                 }
             }
