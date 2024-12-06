@@ -48,6 +48,7 @@ limitations under the License. -->
       <canvas id="canvas_after" width="100%" style="position: absolute; transition: opacity 1s;"></canvas>
       <canvas id="canvas_after_overlay" width="100%" style="position: absolute; transition: opacity 1s;"></canvas>
       <canvas id="canvas_auxiliary" width="100%" style="position: absolute; transition: opacity 1s; display: none;"></canvas>
+      <canvas id="canvas_auxiliary_after" width="100%" style="position: absolute; transition: opacity 1s; display: none;"></canvas>
     </div>
     <!-- checkboxのリスト -->
     <fieldset id="checkboxes" style="display: none; justify-content: left; gap: 1em; border: 1px solid #007f8b; margin-bottom: 10px; margin-top: 0px; flex-wrap: wrap;">
@@ -67,7 +68,12 @@ limitations under the License. -->
 
       <div>
         <input type="checkbox" id="checkbox_auxiliary" name="checkbox_auxiliary" checked />
-        <label for="checkbox_auxiliary">補助線</label>
+        <label for="checkbox_auxiliary">補助線(前)</label>
+      </div>
+      <div>
+        <input type="checkbox" id="checkbox_auxiliary_after" name="checkbox_auxiliary_after" checked />
+        <label for="checkbox_auxiliary_after">補助線(後)</label>
+      </div>
     </fieldset>
 
     <table id="worldLandmarksTable">

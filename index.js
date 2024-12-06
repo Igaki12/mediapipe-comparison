@@ -186,6 +186,12 @@ FileSelector.addEventListener("change", (event) => {
         canvas_auxiliary.height = image_after.height;
         canvas_auxiliary.style.top = image_after.width;
         canvas_auxiliary.style.left = "2em";
+        const canvas_auxiliary_after = document.getElementById("canvas_auxiliary_after");
+        canvas_auxiliary_after.style.display = "";
+        canvas_auxiliary_after.width = image_after.width;
+        canvas_auxiliary_after.height = image_after.height;
+        canvas_auxiliary_after.style.top = image_after.width;
+        canvas_auxiliary_after.style.left = "2em";
 
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
@@ -268,31 +274,44 @@ FileSelector.addEventListener("change", (event) => {
 
 
                     // 正中線を描画する
+                    const canvas_auxiliary_afterCtx = canvas_auxiliary_after.getContext("2d");
+                    const drawingUtils_auxiliary_after = new DrawingUtils(canvas_auxiliary_afterCtx);
 
-                    const canvas_auxiliaryCtx = canvas_auxiliary.getContext("2d");
-                    const drawingUtils_auxiliary = new DrawingUtils(canvas_auxiliaryCtx);
                     const shoulder_center = {
                         x: (result.landmarks[0][11].x + result.landmarks[0][12].x) / 2,
                         y: (result.landmarks[0][11].y + result.landmarks[0][12].y) / 2,
                         z: (result.landmarks[0][11].z + result.landmarks[0][12].z) / 2
                     }
-                    drawingUtils_auxiliary.drawLandmarks([ankle_center, shoulder_center], {
+                    const hip_center = {
+                        x: (result.landmarks[0][23].x + result.landmarks[0][24].x) / 2,
+                        y: (result.landmarks[0][23].y + result.landmarks[0][24].y) / 2,
+                        z: (result.landmarks[0][23].z + result.landmarks[0][24].z) / 2
+                    }
+                    drawingUtils_auxiliary_after.drawLandmarks([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], {
                         radius: 3,
                     });
-                    drawingUtils_auxiliary.drawConnectors([ankle_center, shoulder_center], poseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_auxiliary_after.drawConnectors([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], poseLandmarker.POSE_CONNECTIONS,
                         { lineWidth: 2 });
 
                     // 補助線を描画する
+                    const canvas_auxiliaryCtx = canvas_auxiliary.getContext("2d");
+                    const drawingUtils_auxiliary = new DrawingUtils(canvas_auxiliaryCtx);
                     const shoulder_center_before = {
                         x: (landmark_from_ankle_center_before[11].x + landmark_from_ankle_center_before[12].x) / 2,
                         y: (landmark_from_ankle_center_before[11].y + landmark_from_ankle_center_before[12].y) / 2,
                         z: (landmark_from_ankle_center_before[11].z + landmark_from_ankle_center_before[12].z) / 2
                     }
-                    drawingUtils_auxiliary.drawLandmarks([ankle_center_before, shoulder_center_before], {
+                    const hip_center_before = {
+                        x: (landmark_from_ankle_center_before[23].x + landmark_from_ankle_center_before[24].x) / 2,
+                        y: (landmark_from_ankle_center_before[23].y + landmark_from_ankle_center_before[24].y) / 2,
+                        z: (landmark_from_ankle_center_before[23].z + landmark_from_ankle_center_before[24].z) / 2
+                    }
+
+                    drawingUtils_auxiliary.drawLandmarks([ankle_center, hip_center,shoulder_center, landmark_from_ankle_center_before[0]], {
                         radius: 3,
                         color: "orange",
                     });
-                    drawingUtils_auxiliary.drawConnectors([ankle_center_before, shoulder_center_before], poseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center,shoulder_center, landmark_from_ankle_center_before[0]], poseLandmarker.POSE_CONNECTIONS,
                         {
                         lineWidth: 2,
                         color: "orange",
@@ -301,23 +320,38 @@ FileSelector.addEventListener("change", (event) => {
 
                     document.getElementById("checkbox_before").addEventListener("change", () => {
                         if (document.getElementById("checkbox_before").checked) {
-                            canvas_after_overlay.style.opacity = 0;
-                        } else {
                             canvas_after_overlay.style.opacity = 1;
+                        } else {
+                            canvas_after_overlay.style.opacity = 0;
+                            canvas_auxiliary.style.opacity = 0;
+                            document.getElementById("checkbox_auxiliary").checked = false;
                         }
                     });
                     document.getElementById("checkbox_after").addEventListener("change", () => {
                         if (document.getElementById("checkbox_after").checked) {
-                            canvas_after.style.opacity = 0;
-                        } else {
                             canvas_after.style.opacity = 1;
+                        } else {
+                            canvas_after.style.opacity = 0;
+                            canvas_auxiliary_after.style.opacity = 0;
+                            document.getElementById("checkbox_auxiliary_after").checked = false;
                         }
                     });
                     document.getElementById("checkbox_auxiliary").addEventListener("change", () => {
                         if (document.getElementById("checkbox_auxiliary").checked) {
-                            canvas_auxiliary.style.opacity = 0;
-                        } else {
                             canvas_auxiliary.style.opacity = 1;
+                            canvas_before.style.opacity = 1;
+                            document.getElementById("checkbox_before").checked = true;
+                        } else {
+                            canvas_auxiliary.style.opacity = 0;
+                        }
+                    });
+                    document.getElementById("checkbox_auxiliary_after").addEventListener("change", () => {
+                        if (document.getElementById("checkbox_auxiliary_after").checked) {
+                            canvas_auxiliary_after.style.opacity = 1;
+                            canvas_after.style.opacity = 1;
+                            document.getElementById("checkbox_after").checked = true;
+                        } else {
+                            canvas_auxiliary_after.style.opacity = 0;
                         }
                     });
                     setTimeout(() => {
