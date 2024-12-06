@@ -172,10 +172,12 @@ FileSelector.addEventListener("change", (event) => {
     reader.readAsDataURL(file);
     // 画像が表示されたら、ポーズ推定を行う
     image_after.onload = () => {
+        canvas_after.style.display = "";
         canvas_after.width = image_after.width;
         canvas_after.height = image_after.height;
         canvas_after.style.top = image_after.width;
         canvas_after.style.left = "2em";
+        canvas_after_overlay.style.display = "";
         canvas_after_overlay.width = image_after.width;
         canvas_after_overlay.height = image_after.height;
         canvas_after_overlay.style.top = image_after.width;
