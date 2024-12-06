@@ -290,7 +290,7 @@ FileSelector.addEventListener("change", (event) => {
                     drawingUtils_auxiliary_after.drawLandmarks([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], {
                         radius: 3,
                     });
-                    drawingUtils_auxiliary_after.drawConnectors([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], poseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_auxiliary_after.drawConnectors([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], [{start: 0, end: 1},{start: 1, end: 2},{start: 2, end: 3}],
                         { lineWidth: 2 });
 
                     // 補助線を描画する
@@ -311,7 +311,7 @@ FileSelector.addEventListener("change", (event) => {
                         radius: 3,
                         color: "orange",
                     });
-                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center_before,shoulder_center_before, landmark_from_ankle_center_before[0]], poseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center_before,shoulder_center_before, landmark_from_ankle_center_before[0]],[{start: 0, end: 1},{start: 1, end: 2},{start: 2, end: 3}],
                         {
                         lineWidth: 2,
                         color: "orange",
