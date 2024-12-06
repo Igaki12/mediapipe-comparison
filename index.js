@@ -359,6 +359,7 @@ FileSelector.addEventListener("change", (event) => {
                     setTimeout(() => {
                         document.getElementById("checkboxes").style.display = "flex";
                         canvas_after_overlay.style.opacity = 0;
+                        canvas_auxiliary.style.opacity = 0;
                     }, 8000);
 
                     // 1秒おきに3回点滅させる
@@ -369,6 +370,7 @@ FileSelector.addEventListener("change", (event) => {
                             clearInterval(setLayerInterval);
                         }
                         canvas_after_overlay.style.opacity = 1 - canvas_after_overlay.style.opacity;
+                        canvas_auxiliary.style.opacity = 1 - canvas_auxiliary.style.opacity;
                     }, 1000);
                 }
             }
