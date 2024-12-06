@@ -307,15 +307,17 @@ FileSelector.addEventListener("change", (event) => {
                         z: (landmark_from_ankle_center_before[23].z + landmark_from_ankle_center_before[24].z) / 2
                     }
 
-                    drawingUtils_auxiliary.drawLandmarks([ankle_center, hip_center,shoulder_center, landmark_from_ankle_center_before[0]], {
+                    drawingUtils_auxiliary.drawLandmarks([ankle_center, hip_center_before,shoulder_center_before, landmark_from_ankle_center_before[0]], {
                         radius: 3,
                         color: "orange",
                     });
-                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center,shoulder_center, landmark_from_ankle_center_before[0]], poseLandmarker.POSE_CONNECTIONS,
+                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center_before,shoulder_center_before, landmark_from_ankle_center_before[0]], poseLandmarker.POSE_CONNECTIONS,
                         {
                         lineWidth: 2,
                         color: "orange",
                     });
+                    console.log("POSE_CONNECTIONS : ");
+                    console.log(PoseLandmarker.POSE_CONNECTIONS);
 
 
                     document.getElementById("checkbox_before").addEventListener("change", () => {
