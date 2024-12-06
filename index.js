@@ -223,8 +223,8 @@ FileSelector.addEventListener("change", (event) => {
 
 
 
-            if (result_before != [] && result_before.landmarks && result_before.landmarks.length > 32) {
-                console.log("result_before.landmarks.length : ", result_before.landmarks.length);
+            if (result_before != [] && result_before.landmarks && result_before.landmarks[0].length > 32) {
+                console.log("result_before.landmarks[0].length : ", result_before.landmarks[0].length);
                 const canvas_after_overlayCtx = canvas_after_overlay.getContext("2d");
                 const drawingUtils_after_overlay = new DrawingUtils(canvas_after_overlayCtx);
                 for (const landmark of result_before.landmarks) {
