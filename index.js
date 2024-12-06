@@ -313,6 +313,13 @@ FileSelector.addEventListener("change", (event) => {
                             canvas_after.style.opacity = 1;
                         }
                     });
+                    document.getElementById("checkbox_auxiliary").addEventListener("change", () => {
+                        if (document.getElementById("checkbox_auxiliary").checked) {
+                            canvas_auxiliary.style.opacity = 0;
+                        } else {
+                            canvas_auxiliary.style.opacity = 1;
+                        }
+                    });
                     setTimeout(() => {
                         document.getElementById("checkboxes").style.display = "flex";
                         canvas_after_overlay.style.opacity = 0;
