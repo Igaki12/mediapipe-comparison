@@ -262,6 +262,7 @@ FileSelector.addEventListener("change", (event) => {
 
                     // 正中線を描画する
                     const canvas_auxiliary = document.getElementById("canvas_auxiliary");
+                    canvas_auxiliary.style.display = "block";
                     canvas_auxiliary.width = image_after.width;
                     canvas_auxiliary.height = image_after.height;
                     canvas_auxiliary.style.top = image_after.width;
