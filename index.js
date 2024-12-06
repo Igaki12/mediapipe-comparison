@@ -180,6 +180,12 @@ FileSelector.addEventListener("change", (event) => {
         canvas_after_overlay.height = image_after.height;
         canvas_after_overlay.style.top = image_after.width;
         canvas_after_overlay.style.left = "2em";
+        const canvas_auxiliary = document.getElementById("canvas_auxiliary");
+        canvas_auxiliary.style.display = "";
+        canvas_auxiliary.width = image_after.width;
+        canvas_auxiliary.height = image_after.height;
+        canvas_auxiliary.style.top = image_after.width;
+        canvas_auxiliary.style.left = "2em";
 
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
@@ -262,12 +268,7 @@ FileSelector.addEventListener("change", (event) => {
 
 
                     // 正中線を描画する
-                    const canvas_auxiliary = document.getElementById("canvas_auxiliary");
-                    canvas_auxiliary.style.display = "block";
-                    canvas_auxiliary.width = image_after.width;
-                    canvas_auxiliary.height = image_after.height;
-                    canvas_auxiliary.style.top = image_after.width;
-                    canvas_auxiliary.style.left = "2em";
+
                     const canvas_auxiliaryCtx = canvas_auxiliary.getContext("2d");
                     const drawingUtils_auxiliary = new DrawingUtils(canvas_auxiliaryCtx);
                     const shoulder_center = {
@@ -278,8 +279,8 @@ FileSelector.addEventListener("change", (event) => {
                     drawingUtils_auxiliary.drawLandmarks([ankle_center, shoulder_center], {
                         radius: 3,
                     });
-                    // drawingUtils_auxiliary.drawConnectors([ankle_center, shoulder_center], poseLandmarker.POSE_CONNECTIONS,
-                    //     { lineWidth: 2 });
+                    drawingUtils_auxiliary.drawConnectors([ankle_center, shoulder_center], poseLandmarker.POSE_CONNECTIONS,
+                        { lineWidth: 2 });
 
                     // 補助線を描画する
                     const shoulder_center_before = {
@@ -291,11 +292,11 @@ FileSelector.addEventListener("change", (event) => {
                         radius: 3,
                         color: "orange",
                     });
-                    // drawingUtils_auxiliary.drawConnectors([ankle_center_before, shoulder_center_before], poseLandmarker.POSE_CONNECTIONS,
-                    //     {
-                    //     lineWidth: 2,
-                    //     color: "orange",
-                    // });
+                    drawingUtils_auxiliary.drawConnectors([ankle_center_before, shoulder_center_before], poseLandmarker.POSE_CONNECTIONS,
+                        {
+                        lineWidth: 2,
+                        color: "orange",
+                    });
 
 
                     document.getElementById("checkbox_before").addEventListener("change", () => {
