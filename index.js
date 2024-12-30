@@ -48,6 +48,12 @@ const createPoseLandmarker = async () => {
     document.getElementById("loadingMsg").style.display = "none";
     clearInterval(loadingInterval);
     runPoseEstimation();
+    // 骨格画像をダウンロードする仕組みを追加
+    let download_canvas_before = document.getElementById("download_canvas_before");
+    download_canvas_before.href = document.getElementById("canvas_before").toDataURL();
+    download_canvas_before.download = "pose_before.png";
+    download_canvas_before.style.display = "";
+
 };
 createPoseLandmarker();
 
