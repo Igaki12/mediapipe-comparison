@@ -145,7 +145,7 @@ const runPoseEstimation = () => {
         sample_img_canvas.height = sample_image.height;
         const sample_img_canvasCtx = sample_img_canvas.getContext("2d");
         sample_img_canvasCtx.drawImage(sample_image, 0, 0);
-        sample_img_canvas.style.display = "";
+        // sample_img_canvas.style.display = "";
         // この画像に骨格画像を重ねる
 
     
