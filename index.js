@@ -47,20 +47,7 @@ const createPoseLandmarker = async () => {
     demosSection.classList.remove("invisible");
     document.getElementById("loadingMsg").style.display = "none";
     clearInterval(loadingInterval);
-    // サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う
-    const sample_image_src = "./sample.jpg";
-    const sample_image = new Image();
-    sample_image.src = sample_image_src;
-    sample_image.onload = () => {
-        const sample_img_canvas = document.getElementById("sample_img_canvas");
-        sample_img_canvas.width = sample_image.width;
-        sample_img_canvas.height = sample_image.height;
-        const sample_img_canvasCtx = sample_img_canvas.getContext("2d");
-        sample_img_canvasCtx.drawImage(sample_image, 0, 0);
-        sample_img_canvas.style.display = "";
-        // この画像に骨格画像を重ねる
 
-    };
     runPoseEstimation();
     // 骨格画像をダウンロードする仕組みを追加
     let download_canvas_before = document.getElementById("download_canvas_before");
@@ -144,7 +131,24 @@ const runPoseEstimation = () => {
         poseLandmarker.setOptions({ runningMode: "IMAGE" });
     }
     // poseLandmarker.setOptions({ outputSegmentationMasks: true });
+
+
+
     poseLandmarker.detect(image_before, async (result) => {
+            // サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う
+    const sample_image_src = "./sample.jpg";
+    const sample_image = new Image();
+    sample_image.src = sample_image_src;
+    sample_image.onload = () => {
+        const sample_img_canvas = document.getElementById("sample_img_canvas");
+        sample_img_canvas.width = sample_image.width;
+        sample_img_canvas.height = sample_image.height;
+        const sample_img_canvasCtx = sample_img_canvas.getContext("2d");
+        sample_img_canvasCtx.drawImage(sample_image, 0, 0);
+        sample_img_canvas.style.display = "";
+        // この画像に骨格画像を重ねる
+
+    
         const canvas_overlayCtx = canvas_overlay.getContext("2d");
         const canvas_beforeCtx = canvas_before.getContext("2d");
         const drawingUtils_overlay = new DrawingUtils(canvas_overlayCtx);
@@ -185,7 +189,7 @@ const runPoseEstimation = () => {
         download_sample_img_canvas.download = "pose_sample.png";
         download_sample_img_canvas.style.display = "";
 
-
+    };
     })
 };
 
