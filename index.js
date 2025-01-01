@@ -47,12 +47,29 @@ const createPoseLandmarker = async () => {
     demosSection.classList.remove("invisible");
     document.getElementById("loadingMsg").style.display = "none";
     clearInterval(loadingInterval);
+    // サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う
+    const sample_image_src = "./sample.jpg";
+    const sample_image = new Image();
+    sample_image.src = sample_image_src;
+    sample_image.onload = () => {
+        const sample_img_canvas = document.getElementById("sample_img_canvas");
+        sample_img_canvas.width = sample_image.width;
+        sample_img_canvas.height = sample_image.height;
+        const sample_img_canvasCtx = sample_img_canvas.getContext("2d");
+        sample_img_canvasCtx.drawImage(sample_image, 0, 0);
+        sample_img_canvas.style.display = "";
+        // この画像に骨格画像を重ねる
+
+    };
     runPoseEstimation();
     // 骨格画像をダウンロードする仕組みを追加
     let download_canvas_before = document.getElementById("download_canvas_before");
     download_canvas_before.href = document.getElementById("canvas_before").toDataURL();
     download_canvas_before.download = "pose_before.png";
     download_canvas_before.style.display = "";
+
+
+
 
 };
 createPoseLandmarker();
@@ -112,6 +129,7 @@ canvas_overlay.style.top = image_before.offsetTop;
 canvas_overlay.style.left = 0;
 canvas_before.width = image_before.width;
 canvas_before.height = image_before.height;
+
 // 画像が表示されたら、ポーズ推定を行う
 const runPoseEstimation = () => {
     // image_before.onload = () => {
@@ -131,6 +149,7 @@ const runPoseEstimation = () => {
         const canvas_beforeCtx = canvas_before.getContext("2d");
         const drawingUtils_overlay = new DrawingUtils(canvas_overlayCtx);
         const drawingUtils_before = new DrawingUtils(canvas_beforeCtx);
+        const DrawingUtils_sample = new DrawingUtils(sample_img_canvasCtx);
         for (const landmark of result.landmarks) {
             drawingUtils_overlay.drawLandmarks(landmark, {
                 radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
@@ -140,9 +159,15 @@ const runPoseEstimation = () => {
                 radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
                 lineWidth: 2,
             });
+            DrawingUtils_sample.drawLandmarks(landmark, {
+                radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                lineWidth: 2,
+            });
             drawingUtils_overlay.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
                 { lineWidth: 2, color: "white" });
             drawingUtils_before.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
+                { lineWidth: 2, color: "white" });
+            DrawingUtils_sample.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS,
                 { lineWidth: 2, color: "white" });
         }
 
@@ -153,6 +178,13 @@ const runPoseEstimation = () => {
         console.log(result_before);
         document.getElementById("fileSelector").disabled = false;
         document.getElementById("loadingMsg2").innerText = "比較したい画像を選択してください▽";
+
+        // sample_img_canvasをダウンロードする仕組みを追加
+        let download_sample_img_canvas = document.getElementById("download_sample_img_canvas");
+        download_sample_img_canvas.href = sample_img_canvas.toDataURL();
+        download_sample_img_canvas.download = "pose_sample.png";
+        download_sample_img_canvas.style.display = "";
+
 
     })
 };
@@ -295,10 +327,10 @@ FileSelector.addEventListener("change", (event) => {
                         y: (result.landmarks[0][23].y + result.landmarks[0][24].y) / 2,
                         z: (result.landmarks[0][23].z + result.landmarks[0][24].z) / 2
                     }
-                    drawingUtils_auxiliary_after.drawLandmarks([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], {
+                    drawingUtils_auxiliary_after.drawLandmarks([ankle_center, hip_center, shoulder_center, result.landmarks[0][0]], {
                         radius: 3,
                     });
-                    drawingUtils_auxiliary_after.drawConnectors([ankle_center, hip_center,shoulder_center, result.landmarks[0][0]], [{start: 0, end: 1},{start: 1, end: 2},{start: 2, end: 3}],
+                    drawingUtils_auxiliary_after.drawConnectors([ankle_center, hip_center, shoulder_center, result.landmarks[0][0]], [{ start: 0, end: 1 }, { start: 1, end: 2 }, { start: 2, end: 3 }],
                         { lineWidth: 2 });
 
                     // 補助線を描画する
@@ -315,15 +347,15 @@ FileSelector.addEventListener("change", (event) => {
                         z: (landmark_from_ankle_center_before[23].z + landmark_from_ankle_center_before[24].z) / 2
                     }
 
-                    drawingUtils_auxiliary.drawLandmarks([ankle_center, hip_center_before,shoulder_center_before, landmark_from_ankle_center_before[0]], {
+                    drawingUtils_auxiliary.drawLandmarks([ankle_center, hip_center_before, shoulder_center_before, landmark_from_ankle_center_before[0]], {
                         radius: 3,
                         color: "orange",
                     });
-                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center_before,shoulder_center_before, landmark_from_ankle_center_before[0]],[{start: 0, end: 1},{start: 1, end: 2},{start: 2, end: 3}],
+                    drawingUtils_auxiliary.drawConnectors([ankle_center, hip_center_before, shoulder_center_before, landmark_from_ankle_center_before[0]], [{ start: 0, end: 1 }, { start: 1, end: 2 }, { start: 2, end: 3 }],
                         {
-                        lineWidth: 2,
-                        color: "orange",
-                    });
+                            lineWidth: 2,
+                            color: "orange",
+                        });
                     console.log("POSE_CONNECTIONS : ");
                     console.log(PoseLandmarker.POSE_CONNECTIONS);
 

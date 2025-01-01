@@ -45,28 +45,36 @@ limitations under the License. -->
     <input type="file" accept="image/*" id="fileSelector" disabled />
 
     <!-- 骨格画像をダウンロードする仕組み：https://qiita.com/lookman/items/d93dd62a41f17a4d2de8 -->
-    <a id="download_canvas_before" style="display: none;" >骨格画像をダウンロード</a>
+    <a id="download_canvas_before" style="display: none;">骨格画像をダウンロード</a>
+    <!-- サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う -->
+    <canvas id="sample_img_canvas" width="100%" style="display: none;"></canvas>
+    <a id="download_sample_img_canvas" style="display: none;">サンプル画像をダウンロード</a>
 
     <div id="selectedImageDiv">
       <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
-      <canvas id="canvas_after" width="100%" style="position: absolute; transition: opacity 1s; display: none;"></canvas>
-      <canvas id="canvas_after_overlay" width="100%" style="position: absolute; transition: opacity 1s; display: none;"></canvas>
-      <canvas id="canvas_auxiliary" width="100%" style="position: absolute; transition: opacity 1s; display: none;"></canvas>
-      <canvas id="canvas_auxiliary_after" width="100%" style="position: absolute; transition: opacity 1s; display: none;"></canvas>
+      <canvas id="canvas_after" width="100%"
+        style="position: absolute; transition: opacity 1s; display: none;"></canvas>
+      <canvas id="canvas_after_overlay" width="100%"
+        style="position: absolute; transition: opacity 1s; display: none;"></canvas>
+      <canvas id="canvas_auxiliary" width="100%"
+        style="position: absolute; transition: opacity 1s; display: none;"></canvas>
+      <canvas id="canvas_auxiliary_after" width="100%"
+        style="position: absolute; transition: opacity 1s; display: none;"></canvas>
     </div>
 
 
     <!-- checkboxのリスト -->
-    <fieldset id="checkboxes" style="display: none; justify-content: left; gap: 1em; border: 1px solid #007f8b; margin-bottom: 10px; margin-top: 0px; flex-wrap: wrap;">
+    <fieldset id="checkboxes"
+      style="display: none; justify-content: left; gap: 1em; border: 1px solid #007f8b; margin-bottom: 10px; margin-top: 0px; flex-wrap: wrap;">
       <legend>レイヤ表示</legend>
-    
+
       <div>
         <!-- checkboxの背景色をオレンジにする -->
         <input type="checkbox" id="checkbox_before" name="checkbox_before" checked style="background-color: orange;" />
 
         <label for="checkbox_before">姿勢予測(前)</label>
       </div>
-    
+
       <div>
         <input type="checkbox" id="checkbox_after" name="checkbox_after" checked />
         <label for="checkbox_after">姿勢予測(後)</label>
