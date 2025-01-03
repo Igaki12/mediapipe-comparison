@@ -243,7 +243,7 @@ FileSelector.addEventListener("change", (event) => {
         download_canvas.style.left = "2em";
         // img内容をcanvasに描画する
         const download_canvasCtx = download_canvas.getContext("2d");
-        download_canvasCtx.drawImage(image_after, 0, 0);
+        download_canvasCtx.drawImage(image_after, 0, 0, image_after.width, image_after.height);
 
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
