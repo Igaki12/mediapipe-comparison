@@ -42,13 +42,15 @@ limitations under the License. -->
       <canvas id="canvas_before" width="50%" style="position: block; background-color: #007f8b;"></canvas>
     </div>
     <p id="loadingMsg2"></p>
-    <input type="file" accept="image/*" id="fileSelector" disabled />
+
 
     <!-- 骨格画像をダウンロードする仕組み：https://qiita.com/lookman/items/d93dd62a41f17a4d2de8 -->
     <a id="download_canvas_before" style="display: none;">骨格画像をダウンロード</a>
     <!-- サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う -->
     <canvas id="sample_img_canvas" width="100%" style="display: none;"></canvas>
     <a id="download_sample_img_canvas" style="display: none;">この骨格画像をダウンロード</a>
+
+    <input type="file" accept="image/*" id="fileSelector" disabled />
 
     <div id="selectedImageDiv">
       <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
@@ -62,6 +64,8 @@ limitations under the License. -->
         style="position: absolute; transition: opacity 1s; display: none;"></canvas>
     </div>
 
+    <canvas id="download_canvas" style="display: none;"></canvas>
+    <a id="download_canvas_after" style="display: none;">この骨格画像をダウンロード</a>
 
     <!-- checkboxのリスト -->
     <fieldset id="checkboxes"
@@ -89,8 +93,7 @@ limitations under the License. -->
         <label for="checkbox_auxiliary_after">補助線(後)</label>
       </div>
     </fieldset>
-    <canvas id="download_canvas" width="100%" style="display: none;"></canvas>
-    <a id="download_canvas_after" style="display: none;">この骨格画像をダウンロード</a>
+
 
     <table id="worldLandmarksTable">
       <tr>
