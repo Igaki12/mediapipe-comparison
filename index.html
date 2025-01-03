@@ -41,7 +41,7 @@ limitations under the License. -->
       <canvas id="canvas_overlay" width="50%" style="position: absolute; "></canvas>
       <canvas id="canvas_before" width="50%" style="position: block; background-color: #007f8b;"></canvas>
     </div>
-    <p id="loadingMsg2"></p>
+    
 
 
     <!-- 骨格画像をダウンロードする仕組み：https://qiita.com/lookman/items/d93dd62a41f17a4d2de8 -->
@@ -49,7 +49,9 @@ limitations under the License. -->
     <!-- サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う -->
     <canvas id="sample_img_canvas" width="100%" style="display: none;"></canvas>
     <a id="download_sample_img_canvas" style="display: none;">この骨格画像をダウンロード</a>
+    <br>
 
+    <p id="loadingMsg2"></p>
     <input type="file" accept="image/*" id="fileSelector" disabled />
 
     <div id="selectedImageDiv">
@@ -66,6 +68,7 @@ limitations under the License. -->
 
     <canvas id="download_canvas" style="display: none;"></canvas>
     <a id="download_canvas_after" style="display: none;">この骨格画像をダウンロード</a>
+    <br>
 
     <!-- checkboxのリスト -->
     <fieldset id="checkboxes"
