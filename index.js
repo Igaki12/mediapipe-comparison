@@ -239,8 +239,8 @@ FileSelector.addEventListener("change", (event) => {
         canvas_auxiliary_after.style.left = "2em";
         download_canvas.width = image_after.width;
         download_canvas.height = image_after.height;
-        // download_canvas.style.top = image_after.width;
-        // download_canvas.style.left = "2em";
+        download_canvas.style.top = image_after.width;
+        download_canvas.style.left = "2em";
         // img内容をcanvasに描画する
         const download_canvasCtx = download_canvas.getContext("2d");
         download_canvasCtx.drawImage(image_after, 0, 0);
