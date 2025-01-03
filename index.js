@@ -53,7 +53,7 @@ const createPoseLandmarker = async () => {
     let download_canvas_before = document.getElementById("download_canvas_before");
     download_canvas_before.href = document.getElementById("canvas_before").toDataURL();
     download_canvas_before.download = "pose_before.png";
-    download_canvas_before.style.display = "";
+    // download_canvas_before.style.display = "";
 
 
 
@@ -200,6 +200,7 @@ const FileSelector = document.getElementById("fileSelector");
 const image_after = document.getElementById("selectedImage");
 const canvas_after = document.getElementById("canvas_after");
 const canvas_after_overlay = document.getElementById("canvas_after_overlay");
+const download_canvas = document.getElementById("download_canvas");
 
 let result_after = [];
 FileSelector.addEventListener("change", (event) => {
@@ -236,6 +237,13 @@ FileSelector.addEventListener("change", (event) => {
         canvas_auxiliary_after.height = image_after.height;
         canvas_auxiliary_after.style.top = image_after.width;
         canvas_auxiliary_after.style.left = "2em";
+        download_canvas.width = image_after.width;
+        download_canvas.height = image_after.height;
+        download_canvas.style.top = image_after.width;
+        download_canvas.style.left = "2em";
+        // img内容をcanvasに描画する
+        const download_canvasCtx = download_canvas.getContext("2d");
+        download_canvasCtx.drawImage(image_after, 0, 0);
 
         if (!poseLandmarker) {
             console.log("Wait for poseLandmarker to load before clicking!");
@@ -249,6 +257,7 @@ FileSelector.addEventListener("change", (event) => {
         poseLandmarker.detect(image_after, async (result) => {
             const canvas_afterCtx = canvas_after.getContext("2d");
             const drawingUtils_after = new DrawingUtils(canvas_afterCtx);
+            const drawingUtils_download = new DrawingUtils(download_canvasCtx);
 
 
             for (const landmark of result.landmarks) {
@@ -256,7 +265,12 @@ FileSelector.addEventListener("change", (event) => {
                     radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
                     // color: "orange",
                 });
+                drawingUtils_download.drawLandmarks(landmark, {
+                    radius: (data) => DrawingUtils.lerp(data.from?.z ?? 0, -0.15, 0.1, 5, 1),
+                    // color: "orange",
+                });
                 drawingUtils_after.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
+                drawingUtils_download.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS);
             }
             if (result.landmarks.length === 0 || result.landmarks[0] == undefined || result.landmarks[0].length < 32) {
                 // この後の処理を行わない
@@ -404,13 +418,18 @@ FileSelector.addEventListener("change", (event) => {
                         document.getElementById("checkboxes").style.display = "flex";
                         canvas_after_overlay.style.opacity = 0;
                         canvas_auxiliary.style.opacity = 0;
-                    }, 8000);
+                        // ここにdownload_canvas_afterの設定を追加
+                        let download_canvas_after = document.getElementById("download_canvas_after");
+                        download_canvas_after.href = document.getElementById("download_canvas").toDataURL();
+                        download_canvas_after.download = "pose_after.png";
+                        download_canvas_after.style.display = "";
+                    }, 4000);
 
                     // 1秒おきに3回点滅させる
                     let count = 0;
                     const setLayerInterval = setInterval(() => {
                         count++;
-                        if (count > 7) {
+                        if (count > 3) {
                             clearInterval(setLayerInterval);
                         }
                         canvas_after_overlay.style.opacity = 1 - canvas_after_overlay.style.opacity;

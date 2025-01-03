@@ -48,7 +48,7 @@ limitations under the License. -->
     <a id="download_canvas_before" style="display: none;">骨格画像をダウンロード</a>
     <!-- サンプル画像をcanvasに描画する仕組み: https://www.g-u-k.jp/take_log/archives/826 drawImage()を使う -->
     <canvas id="sample_img_canvas" width="100%" style="display: none;"></canvas>
-    <a id="download_sample_img_canvas" style="display: none;">サンプル画像をダウンロード</a>
+    <a id="download_sample_img_canvas" style="display: none;">この骨格画像をダウンロード</a>
 
     <div id="selectedImageDiv">
       <img id="selectedImage" width="100%" crossorigin="anonymous" loading="lazy" />
@@ -89,6 +89,8 @@ limitations under the License. -->
         <label for="checkbox_auxiliary_after">補助線(後)</label>
       </div>
     </fieldset>
+    <canvas id="download_canvas" width="100%" style="display: none;"></canvas>
+    <a id="download_canvas_after" style="display: none;">この骨格画像をダウンロード</a>
 
     <table id="worldLandmarksTable">
       <tr>
