@@ -129,6 +129,8 @@ table th {
 table td {
   border: 1px solid #ccc;
   padding: 8px;
+  background-color: white;
+  text-align: center;
 }
 th.sort-asc::after {
   content: " ▲";

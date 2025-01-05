@@ -414,16 +414,7 @@ FileSelector.addEventListener("change", (event) => {
                             canvas_auxiliary_after.style.opacity = 0;
                         }
                     });
-                    setTimeout(() => {
-                        document.getElementById("checkboxes").style.display = "flex";
-                        canvas_after_overlay.style.opacity = 0;
-                        canvas_auxiliary.style.opacity = 0;
-                        // ここにdownload_canvas_afterの設定を追加
-                        let download_canvas_after = document.getElementById("download_canvas_after");
-                        download_canvas_after.href = document.getElementById("download_canvas").toDataURL();
-                        download_canvas_after.download = "pose_after.png";
-                        download_canvas_after.style.display = "";
-                    }, 4000);
+
 
                     // 1秒おきに3回点滅させる
                     let count = 0;
@@ -435,6 +426,51 @@ FileSelector.addEventListener("change", (event) => {
                         canvas_after_overlay.style.opacity = 1 - canvas_after_overlay.style.opacity;
                         canvas_auxiliary.style.opacity = 1 - canvas_auxiliary.style.opacity;
                     }, 1000);
+
+                    setTimeout(() => {
+                        document.getElementById("checkboxes").style.display = "flex";
+                        canvas_after_overlay.style.opacity = 0;
+                        canvas_auxiliary.style.opacity = 0;
+                        // ここにdownload_canvas_afterの設定を追加
+                        let download_canvas_after = document.getElementById("download_canvas_after");
+                        download_canvas_after.href = document.getElementById("download_canvas").toDataURL();
+                        download_canvas_after.download = "pose_after.png";
+                        download_canvas_after.style.display = "";
+
+                        // ここに関節（左肘）の角度：Quaternion(x,y,z,w)を求める処理を追加
+                        const left_shoulder = result.worldLandmarks[0][11];
+                        const left_elbow = result.worldLandmarks[0][13];
+                        const left_wrist = result.worldLandmarks[0][15];
+                        // XY平面上での角度を求める
+                        const angle_XY = Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) - Math.atan2(left_elbow.y - left_shoulder.y, left_elbow.x - left_shoulder.x);
+                        // Quaternionを求める
+                        const leftElbowQuaternionXY = {
+                            x: 0,
+                            y: 0,
+                            z: Math.sin(angle_XY / 2),
+                            w: Math.cos(angle_XY / 2)
+                        };
+                        const worldLandmarksTable = document.getElementById("worldLandmarksTable");
+                        const leftElbowTr = document.createElement("tr");
+                        const leftElbowTd1 = document.createElement("td");
+                        const leftElbowTd2 = document.createElement("td");
+                        const leftElbowTd3 = document.createElement("td");
+                        const leftElbowTd4 = document.createElement("td");
+                        const leftElbowTd5 = document.createElement("td");
+                        leftElbowTd1.innerText = "左肘";
+                        leftElbowTd2.innerText = leftElbowQuaternionXY.x;
+                        leftElbowTd3.innerText = leftElbowQuaternionXY.y;
+                        leftElbowTd4.innerText = leftElbowQuaternionXY.z;
+                        leftElbowTd5.innerText = leftElbowQuaternionXY.w;
+                        leftElbowTr.appendChild(leftElbowTd1);
+                        leftElbowTr.appendChild(leftElbowTd2);
+                        leftElbowTr.appendChild(leftElbowTd3);
+                        leftElbowTr.appendChild(leftElbowTd4);
+                        leftElbowTr.appendChild(leftElbowTd5);
+                        worldLandmarksTable.appendChild(leftElbowTr);
+                        
+
+                    }, 4000);
                 }
             }
             console.log("canvas_after_result : ");
