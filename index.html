@@ -100,10 +100,21 @@ limitations under the License. -->
 
     <table id="worldLandmarksTable">
       <tr>
-        <th>部位 (Original) </th>
-        <th>X座標/左方向(cm)</th>
-        <th>Y座標/下方向(cm)</th>
-        <th>Z座標/正面前方向(cm)</th>
+        <th rowspan="2">部位 (Original) </th>
+        <th colspan="4">Quaternion</th>
+      </tr>
+      <tr>
+        <th>X</th>
+        <th>Y</th>
+        <th>Z</th>
+        <th>W</th>
+      </tr>
+      <tr>
+        <td>左ひじ</td>
+        <td id="leftElbowQuaternionX"></td>
+        <td id="leftElbowQuaternionY"></td>
+        <td id="leftElbowQuaternionZ"></td>
+        <td id="leftElbowQuaternionW"></td>
       </tr>
     </table>
   </section>
