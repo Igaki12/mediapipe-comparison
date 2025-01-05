@@ -468,7 +468,37 @@ FileSelector.addEventListener("change", (event) => {
                         leftElbowTr.appendChild(leftElbowTd4);
                         leftElbowTr.appendChild(leftElbowTd5);
                         worldLandmarksTable.appendChild(leftElbowTr);
-                        
+                        // 同様に、関節（右肘）の角度：Quaternion(x,y,z,w)を求める処理を追加
+                        const right_shoulder = result.worldLandmarks[0][12];
+                        const right_elbow = result.worldLandmarks[0][14];
+                        const right_wrist = result.worldLandmarks[0][16];
+                        // XY平面上での角度を求める
+                        const angle_XY_right = Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) - Math.atan2(right_elbow.y - right_shoulder.y, right_elbow.x - right_shoulder.x);
+                        // Quaternionを求める
+                        const rightElbowQuaternionXY = {
+                            x: 0,
+                            y: 0,
+                            z: Math.sin(angle_XY_right / 2),
+                            w: Math.cos(angle_XY_right / 2)
+                        };
+                        const rightElbowTr = document.createElement("tr");
+                        const rightElbowTd1 = document.createElement("td");
+                        const rightElbowTd2 = document.createElement("td");
+                        const rightElbowTd3 = document.createElement("td");
+                        const rightElbowTd4 = document.createElement("td");
+                        const rightElbowTd5 = document.createElement("td");
+                        rightElbowTd1.innerText = "右肘";
+                        rightElbowTd2.innerText = rightElbowQuaternionXY.x;
+                        rightElbowTd3.innerText = rightElbowQuaternionXY.y;
+                        rightElbowTd4.innerText = rightElbowQuaternionXY.z;
+                        rightElbowTd5.innerText = rightElbowQuaternionXY.w;
+                        rightElbowTr.appendChild(rightElbowTd1);
+                        rightElbowTr.appendChild(rightElbowTd2);
+                        rightElbowTr.appendChild(rightElbowTd3);
+                        rightElbowTr.appendChild(rightElbowTd4);
+                        rightElbowTr.appendChild(rightElbowTd5);
+                        worldLandmarksTable.appendChild(rightElbowTr);
+
 
                     }, 4000);
                 }
