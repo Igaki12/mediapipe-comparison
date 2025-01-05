@@ -443,12 +443,12 @@ FileSelector.addEventListener("change", (event) => {
                         const left_wrist = result.worldLandmarks[0][15];
                         // XY平面上での角度を求める
                         const angle_XY = Math.atan2(left_wrist.y - left_elbow.y, left_wrist.x - left_elbow.x) - Math.atan2(left_elbow.y - left_shoulder.y, left_elbow.x - left_shoulder.x);
-                        // Quaternionを求める
+                        // Quaternionを求める 小数点以下第7位で四捨五入する
                         const leftElbowQuaternionXY = {
-                            x: 0,
-                            y: 0,
-                            z: Math.sin(angle_XY / 2),
-                            w: Math.cos(angle_XY / 2)
+                            x: "0.000000",
+                            y: "0.000000",
+                            z: Math.round(Math.sin(angle_XY / 2) * 1000000) / 1000000,
+                            w: Math.round(Math.cos(angle_XY / 2) * 1000000) / 1000000
                         };
                         const worldLandmarksTable = document.getElementById("worldLandmarksTable");
                         const leftElbowTr = document.createElement("tr");
@@ -476,10 +476,10 @@ FileSelector.addEventListener("change", (event) => {
                         const angle_XY_right = Math.atan2(right_wrist.y - right_elbow.y, right_wrist.x - right_elbow.x) - Math.atan2(right_elbow.y - right_shoulder.y, right_elbow.x - right_shoulder.x);
                         // Quaternionを求める
                         const rightElbowQuaternionXY = {
-                            x: 0,
-                            y: 0,
-                            z: Math.sin(angle_XY_right / 2),
-                            w: Math.cos(angle_XY_right / 2)
+                            x: "0.000000",
+                            y: "0.000000",
+                            z: Math.round(Math.sin(angle_XY_right / 2) * 1000000) / 1000000,
+                            w: Math.round(Math.cos(angle_XY_right / 2) * 1000000) / 1000000
                         };
                         const rightElbowTr = document.createElement("tr");
                         const rightElbowTd1 = document.createElement("td");
@@ -503,10 +503,10 @@ FileSelector.addEventListener("change", (event) => {
                         const angle_XY_left_shoulder = Math.atan2(left_elbow.y - left_shoulder.y, left_elbow.x - left_shoulder.x) - Math.atan2(left_shoulder.y - right_shoulder.y, left_shoulder.x - right_shoulder.x);
                         // Quaternionを求める
                         const leftShoulderQuaternionXY = {
-                            x: 0,
-                            y: 0,
-                            z: Math.sin(angle_XY_left_shoulder / 2),
-                            w: Math.cos(angle_XY_left_shoulder / 2)
+                            x: "0.000000",
+                            y: "0.000000",
+                            z: Math.round(Math.sin(angle_XY_left_shoulder / 2) * 1000000) / 1000000,
+                            w: Math.round(Math.cos(angle_XY_left_shoulder / 2) * 1000000) / 1000000
                         };
                         const leftShoulderTr = document.createElement("tr");
                         const leftShoulderTd1 = document.createElement("td");
@@ -530,10 +530,10 @@ FileSelector.addEventListener("change", (event) => {
                         const angle_XY_right_shoulder = Math.atan2(right_elbow.y - right_shoulder.y, right_elbow.x - right_shoulder.x) - Math.atan2(right_shoulder.y - left_shoulder.y, right_shoulder.x - left_shoulder.x);
                         // Quaternionを求める
                         const rightShoulderQuaternionXY = {
-                            x: 0,
-                            y: 0,
-                            z: Math.sin(angle_XY_right_shoulder / 2),
-                            w: Math.cos(angle_XY_right_shoulder / 2)
+                            x: "0.000000",
+                            y: "0.000000",
+                            z: Math.round(Math.sin(angle_XY_right_shoulder / 2) * 1000000) / 1000000,
+                            w: Math.round(Math.cos(angle_XY_right_shoulder / 2) * 1000000) / 1000000
                         };
                         const rightShoulderTr = document.createElement("tr");
                         const rightShoulderTd1 = document.createElement("td");
