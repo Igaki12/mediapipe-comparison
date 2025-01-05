@@ -498,6 +498,35 @@ FileSelector.addEventListener("change", (event) => {
                         rightElbowTr.appendChild(rightElbowTd4);
                         rightElbowTr.appendChild(rightElbowTd5);
                         worldLandmarksTable.appendChild(rightElbowTr);
+                        // 関節（左肩）の角度：Quaternion(x,y,z,w)を求める処理を追加
+                        // 今回はrightShoulder-leftShoulder-leftElbow間の角度を求める
+                        const angle_XY_left_shoulder = Math.atan2(left_elbow.y - left_shoulder.y, left_elbow.x - left_shoulder.x) - Math.atan2(left_shoulder.y - right_shoulder.y, left_shoulder.x - right_shoulder.x);
+                        // Quaternionを求める
+                        const leftShoulderQuaternionXY = {
+                            x: 0,
+                            y: 0,
+                            z: Math.sin(angle_XY_left_shoulder / 2),
+                            w: Math.cos(angle_XY_left_shoulder / 2)
+                        };
+                        const leftShoulderTr = document.createElement("tr");
+                        const leftShoulderTd1 = document.createElement("td");
+                        const leftShoulderTd2 = document.createElement("td");
+                        const leftShoulderTd3 = document.createElement("td");
+                        const leftShoulderTd4 = document.createElement("td");
+                        const leftShoulderTd5 = document.createElement("td");
+                        leftShoulderTd1.innerText = "左肩";
+                        leftShoulderTd2.innerText = leftShoulderQuaternionXY.x;
+                        leftShoulderTd3.innerText = leftShoulderQuaternionXY.y;
+                        leftShoulderTd4.innerText = leftShoulderQuaternionXY.z;
+                        leftShoulderTd5.innerText = leftShoulderQuaternionXY.w;
+                        leftShoulderTr.appendChild(leftShoulderTd1);
+                        leftShoulderTr.appendChild(leftShoulderTd2);
+                        leftShoulderTr.appendChild(leftShoulderTd3);
+                        leftShoulderTr.appendChild(leftShoulderTd4);
+                        leftShoulderTr.appendChild(leftShoulderTd5);
+                        worldLandmarksTable.appendChild(leftShoulderTr);
+                        
+                        
 
 
                     }, 4000);
