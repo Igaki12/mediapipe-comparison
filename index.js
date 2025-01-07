@@ -513,8 +513,8 @@ FileSelector.addEventListener("change", (event) => {
                         const leftShoulderQuaternionXY = {
                             x: 0,
                             y: 0,
-                            // 肩は水平の角度が0.3と一致するので、それを足す
-                            z: Math.round((angle_XY_left_shoulder / Math.PI + 0.3) * 1000000) / 1000000,
+                            // 肩は0 -> 0.3 , PI -> -0.4 になるように加工
+                            z: Math.round((-0.7 * angle_XY_left_shoulder / Math.PI + 0.3) * 1000000) / 1000000,
                             w: 1,
                         };
                         const leftShoulderTr = document.createElement("tr");
@@ -539,13 +539,17 @@ FileSelector.addEventListener("change", (event) => {
                         worldLandmarksTable.appendChild(leftShoulderTr);
                         // 関節（右肩）の角度：Quaternion(x,y,z,w)を求める処理を追加
                         // 今回はleftShoulder-rightShoulder-rightElbow間の角度を求める
-                        const angle_XY_right_shoulder = Math.atan2(right_elbow.y - right_shoulder.y, right_elbow.x - right_shoulder.x) - Math.atan2(right_shoulder.y - left_shoulder.y, right_shoulder.x - left_shoulder.x);
+                        let angle_XY_right_shoulder = Math.atan2(right_elbow.y - right_shoulder.y, right_elbow.x - right_shoulder.x) - Math.atan2(right_shoulder.y - left_shoulder.y, right_shoulder.x - left_shoulder.x);
+                        if (angle_XY_right_shoulder > 2 *Math.PI)[
+                            // 範囲を-PI~PIにする
+                            angle_XY_right_shoulder -= 2 * Math.PI
+                        ]
                         // Quaternionを求める
                         const rightShoulderQuaternionXY = {
                             x: 0,
                             y: 0,
-                            // 肩は水平の角度が-0.3と一致するので、それを足す
-                            z: -1 * Math.round((angle_XY_right_shoulder / Math.PI + 0.3) * 1000000) / 1000000,
+                            // 右肩は、0 -> -0.3 , -1*PI ->0.4 になるように加工
+                            z: -1 * Math.round((0.7 * angle_XY_right_shoulder / Math.PI + 0.3) * 1000000) / 1000000,
                             w: 1,
                         };
                         const rightShoulderTr = document.createElement("tr");
