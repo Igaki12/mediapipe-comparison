@@ -448,7 +448,7 @@ FileSelector.addEventListener("change", (event) => {
                             x: 0,
                             y: 0,
                             // -1~1の範囲で、半周(180度)で1になるようにする
-                            z: Math.round(angle_XY / Math.PI * 1000000) / 1000000,
+                            z: -1*Math.round(angle_XY / Math.PI * 1000000) / 1000000,
                             w: 1,
                         };
                         const worldLandmarksTable = document.getElementById("worldLandmarksTable");
@@ -483,7 +483,7 @@ FileSelector.addEventListener("change", (event) => {
                             x: 0,
                             y: 0,
                             // 右側は左側の逆の角度になるので、-1をかける
-                            z: -1 * Math.round(angle_XY_right / Math.PI * 1000000) / 1000000,
+                            z: Math.round(angle_XY_right / Math.PI * 1000000) / 1000000,
                             w: 1,
                         };
                         const rightElbowTr = document.createElement("tr");
