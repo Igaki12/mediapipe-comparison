@@ -482,7 +482,44 @@ FileSelector.addEventListener("change", (event) => {
                         neckTr.appendChild(neckTd5);
                         worldLandmarksTable.appendChild(neckTr);
 
-
+                        // ここに上半身の角度：Quaternion(x,y,z,w)を求める処理を追加
+                        shoulder_center_worldLandmarks;
+                        hip_center_worldLandmarks;
+                        const ankle_center_worldLandmarks = {
+                            x: (result.worldLandmarks[0][27].x + result.worldLandmarks[0][28].x) / 2,
+                            y: (result.worldLandmarks[0][27].y + result.worldLandmarks[0][28].y) / 2,
+                            z: (result.worldLandmarks[0][27].z + result.worldLandmarks[0][28].z) / 2
+                        }
+                        // XY平面上での角度を求める。尻中央-肩中央のベクトルに対する、足首中央-肩中央のベクトルの角度
+                        const angle_XY_upper_body = Math.atan2(ankle_center_worldLandmarks.y - shoulder_center_worldLandmarks.y, ankle_center_worldLandmarks.x - shoulder_center_worldLandmarks.x) - Math.atan2(shoulder_center_worldLandmarks.y - hip_center_worldLandmarks.y, shoulder_center_worldLandmarks.x - hip_center_worldLandmarks.x);
+                        // Quaternionを求める
+                        const upperBodyQuaternionXY = {
+                            x: 0,
+                            y: 0,
+                            // -0.7~+0.7の範囲で、右に90度傾く+0.7、左に90度傾く-0.7になるようにする
+                            z: -1.4 * Math.round(angle_XY_upper_body / Math.PI * 1000000) / 1000000,
+                            w: 1,
+                        };
+                        const upperBodyTr = document.createElement("tr");
+                        const upperBodyTd1 = document.createElement("td");
+                        const upperBodyTdAngle = document.createElement("td");
+                        const upperBodyTd2 = document.createElement("td");
+                        const upperBodyTd3 = document.createElement("td");
+                        const upperBodyTd4 = document.createElement("td");
+                        const upperBodyTd5 = document.createElement("td");
+                        upperBodyTd1.innerText = "上半身(1)";
+                        upperBodyTdAngle.innerText = angle_XY_upper_body * 180 / Math.PI;
+                        upperBodyTd2.innerText = upperBodyQuaternionXY.x;
+                        upperBodyTd3.innerText = upperBodyQuaternionXY.y;
+                        upperBodyTd4.innerText = upperBodyQuaternionXY.z;
+                        upperBodyTd5.innerText = upperBodyQuaternionXY.w;
+                        upperBodyTr.appendChild(upperBodyTd1);
+                        upperBodyTr.appendChild(upperBodyTdAngle);
+                        upperBodyTr.appendChild(upperBodyTd2);
+                        upperBodyTr.appendChild(upperBodyTd3);
+                        upperBodyTr.appendChild(upperBodyTd4);
+                        upperBodyTr.appendChild(upperBodyTd5);
+                        worldLandmarksTable.appendChild(upperBodyTr);
 
                         // ここに関節（左肘）の角度：Quaternion(x,y,z,w)を求める処理を追加
                         const left_shoulder = result.worldLandmarks[0][11];
