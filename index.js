@@ -469,7 +469,7 @@ FileSelector.addEventListener("change", (event) => {
                         const neckTd4 = document.createElement("td");
                         const neckTd5 = document.createElement("td");
                         neckTd1.innerText = "首(2)";
-                        neckTdAngle.innerText = angle_XY_neck * 180 / Math.PI;
+                        neckTdAngle.innerText = Math.round(angle_XY_neck / Math.PI * 10) / 10;
                         neckTd2.innerText = neckQuaternionXY.x;
                         neckTd3.innerText = neckQuaternionXY.y;
                         neckTd4.innerText = neckQuaternionXY.z;
@@ -490,8 +490,8 @@ FileSelector.addEventListener("change", (event) => {
                             y: (result.worldLandmarks[0][27].y + result.worldLandmarks[0][28].y) / 2,
                             z: (result.worldLandmarks[0][27].z + result.worldLandmarks[0][28].z) / 2
                         }
-                        // XY平面上での角度を求める。尻中央-肩中央のベクトルに対する、足首中央-肩中央のベクトルの角度
-                        const angle_XY_upper_body = Math.atan2(ankle_center_worldLandmarks.y - shoulder_center_worldLandmarks.y, ankle_center_worldLandmarks.x - shoulder_center_worldLandmarks.x) - Math.atan2(shoulder_center_worldLandmarks.y - hip_center_worldLandmarks.y, shoulder_center_worldLandmarks.x - hip_center_worldLandmarks.x);
+                        // XY平面上での角度を求める。足首中央-肩中央のベクトルに対する、肩中央-尻中央のベクトルの角度
+                        const angle_XY_upper_body = Math.atan2(shoulder_center_worldLandmarks.y - hip_center_worldLandmarks.y, shoulder_center_worldLandmarks.x - hip_center_worldLandmarks.x) - Math.atan2(hip_center_worldLandmarks.y - ankle_center_worldLandmarks.y, hip_center_worldLandmarks.x - ankle_center_worldLandmarks.x);
                         // Quaternionを求める
                         const upperBodyQuaternionXY = {
                             x: 0,
@@ -508,7 +508,7 @@ FileSelector.addEventListener("change", (event) => {
                         const upperBodyTd4 = document.createElement("td");
                         const upperBodyTd5 = document.createElement("td");
                         upperBodyTd1.innerText = "上半身(1)";
-                        upperBodyTdAngle.innerText = angle_XY_upper_body * 180 / Math.PI;
+                        upperBodyTdAngle.innerText = Math.round(angle_XY_upper_body / Math.PI * 10) / 10;
                         upperBodyTd2.innerText = upperBodyQuaternionXY.x;
                         upperBodyTd3.innerText = upperBodyQuaternionXY.y;
                         upperBodyTd4.innerText = upperBodyQuaternionXY.z;
@@ -544,7 +544,7 @@ FileSelector.addEventListener("change", (event) => {
                         const leftElbowTd4 = document.createElement("td");
                         const leftElbowTd5 = document.createElement("td");
                         leftElbowTd1.innerText = "左肘(20)";
-                        leftElbowTdAngle.innerText = angle_XY * 180 / Math.PI;
+                        leftElbowTdAngle.innerText = Math.round(angle_XY / Math.PI * 10) / 10;
                         leftElbowTd2.innerText = leftElbowQuaternionXY.x;
                         leftElbowTd3.innerText = leftElbowQuaternionXY.y;
                         leftElbowTd4.innerText = leftElbowQuaternionXY.z;
@@ -578,7 +578,7 @@ FileSelector.addEventListener("change", (event) => {
                         const rightElbowTd4 = document.createElement("td");
                         const rightElbowTd5 = document.createElement("td");
                         rightElbowTd1.innerText = "右肘(52)";
-                        rightElbowTdAngle.innerText = angle_XY_right * 180 / Math.PI;
+                        rightElbowTdAngle.innerText = Math.round(angle_XY_right / Math.PI * 10) / 10;
                         rightElbowTd2.innerText = rightElbowQuaternionXY.x;
                         rightElbowTd3.innerText = rightElbowQuaternionXY.y;
                         rightElbowTd4.innerText = rightElbowQuaternionXY.z;
@@ -609,7 +609,7 @@ FileSelector.addEventListener("change", (event) => {
                         const leftShoulderTd4 = document.createElement("td");
                         const leftShoulderTd5 = document.createElement("td");
                         leftShoulderTd1.innerText = "左肩(18)";
-                        leftShoulderTdAngle.innerText = angle_XY_left_shoulder * 180 / Math.PI;
+                        leftShoulderTdAngle.innerText = Math.round(angle_XY_left_shoulder / Math.PI * 10) / 10;
                         leftShoulderTd2.innerText = leftShoulderQuaternionXY.x;
                         leftShoulderTd3.innerText = leftShoulderQuaternionXY.y;
                         leftShoulderTd4.innerText = leftShoulderQuaternionXY.z;
@@ -644,7 +644,7 @@ FileSelector.addEventListener("change", (event) => {
                         const rightShoulderTd4 = document.createElement("td");
                         const rightShoulderTd5 = document.createElement("td");
                         rightShoulderTd1.innerText = "右肩(50)";
-                        rightShoulderTdAngle.innerText = angle_XY_right_shoulder * 180 / Math.PI;
+                        rightShoulderTdAngle.innerText = Math.round(angle_XY_right_shoulder / Math.PI * 10) / 10;
                         rightShoulderTd2.innerText = rightShoulderQuaternionXY.x;
                         rightShoulderTd3.innerText = rightShoulderQuaternionXY.y;
                         rightShoulderTd4.innerText = rightShoulderQuaternionXY.z;
