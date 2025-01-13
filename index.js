@@ -438,17 +438,25 @@ FileSelector.addEventListener("change", (event) => {
                         download_canvas_after.style.display = "";
 
                         // ここに首関節の角度：Quaternion(x,y,z,w)を求める処理を追加
-                        nose; 
-                        shoulder_center;
-                        hip_center;
+                        const nose_worldLandmarks = result.worldLandmarks[0][0];
+                        const shoulder_center_worldLandmarks = {
+                            x: (result.worldLandmarks[0][11].x + result.worldLandmarks[0][12].x) / 2,
+                            y: (result.worldLandmarks[0][11].y + result.worldLandmarks[0][12].y) / 2,
+                            z: (result.worldLandmarks[0][11].z + result.worldLandmarks[0][12].z) / 2
+                        }
+                        const hip_center_worldLandmarks = {
+                            x: (result.worldLandmarks[0][23].x + result.worldLandmarks[0][24].x) / 2,
+                            y: (result.worldLandmarks[0][23].y + result.worldLandmarks[0][24].y) / 2,
+                            z: (result.worldLandmarks[0][23].z + result.worldLandmarks[0][24].z) / 2
+                        }
                         // XY平面上での角度を求める。尻中央-肩中央のベクトルに対する、鼻-肩中央のベクトルの角度
-                        const angle_XY_neck = Math.atan2(nose.y - shoulder_center.y, nose.x - shoulder_center.x) - Math.atan2(shoulder_center.y - hip_center.y, shoulder_center.x - hip_center.x);
+                        const angle_XY_neck = Math.atan2(nose_worldLandmarks.y - shoulder_center_worldLandmarks.y, nose_worldLandmarks.x - shoulder_center_worldLandmarks.x) - Math.atan2(shoulder_center_worldLandmarks.y - hip_center_worldLandmarks.y, shoulder_center_worldLandmarks.x - hip_center_worldLandmarks.x);
                         // Quaternionを求める 小数点以下第7位で四捨五入する
                         const neckQuaternionXY = {
                             x: 0,
                             y: 0,
                             // -1~1の範囲で、90度右に傾くと+0.5、左に傾くと-0.5になるようにする
-                            z: -1*Math.round(angle_XY_neck / Math.PI * 1000000) / 1000000,
+                            z: Math.round(angle_XY_neck / Math.PI * 1000000) / 1000000,
                             w: 1,
                         };
                         const worldLandmarksTable = document.getElementById("worldLandmarksTable");
@@ -472,7 +480,7 @@ FileSelector.addEventListener("change", (event) => {
                         neckTr.appendChild(neckTd4);
                         neckTr.appendChild(neckTd5);
                         worldLandmarksTable.appendChild(neckTr);
-                        
+
 
 
                         // ここに関節（左肘）の角度：Quaternion(x,y,z,w)を求める処理を追加
