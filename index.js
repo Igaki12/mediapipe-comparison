@@ -454,10 +454,10 @@ FileSelector.addEventListener("change", (event) => {
                         // Quaternionを求める 小数点以下第7位で四捨五入する
                         const neckQuaternionXY = {
                             // テスト
-                            x: Math.atan2(nose_worldLandmarks.y - shoulder_center_worldLandmarks.y, nose_worldLandmarks.x - shoulder_center_worldLandmarks.x),
-                            y: Math.atan2(shoulder_center_worldLandmarks.y - hip_center_worldLandmarks.y, shoulder_center_worldLandmarks.x - hip_center_worldLandmarks.x),
+                            x: 0,
+                            y: 0,
                             // -1~1の範囲で、90度右に傾くと+0.5、左に傾くと-0.5になるようにする
-                            z: Math.round(angle_XY_neck / Math.PI * 1000000) / 1000000,
+                            z: -1 * Math.round(angle_XY_neck / Math.PI * 1000000) / 1000000,
                             w: 1,
                         };
                         const worldLandmarksTable = document.getElementById("worldLandmarksTable");
