@@ -13,26 +13,17 @@ See the License for the specific language governing permissions and
 limitations under the License. */
 
 @use "@material";
-
 body {
-  font-family: 'Fira Sans', sans-serif;
-  /* 変更：roboto → Fira Sans */
+  font-family: roboto;
   margin: 2em;
-  color: #5d4037;
-  /* 変更：#3d3d3d → ダークブラウン */
-  --mdc-theme-primary: #ff8c00;
-  /* 変更：青緑系 → オレンジ */
-  --mdc-theme-on-primary: #ffffff;
-  /* 変更：薄いグレー → 白 */
-  background-color: #fff8e1;
-  /* 変更：ライトグリーン → ベージュ */
-  transition: background-color 0.3s ease;
-  /* 背景の変化をスムーズに */
+  color: #3d3d3d;
+  --mdc-theme-primary: #007f8b;
+  --mdc-theme-on-primary: #f1f3f4;
+  background-color: #cbf8d7;
 }
 
 h1 {
-  color: #8b4513;
-  /* 変更：青緑系 → ブラウン系 */
+  color: #007f8b;
 }
 
 h2 {
@@ -87,14 +78,12 @@ footer {
 .detectOnClick p {
   position: absolute;
   padding: 5px;
-  background-color: #ff8c00;
-  /* 変更：青緑系 → オレンジ */
+  background-color: #007f8b;
   color: #fff;
   border: 1px dashed rgba(255, 255, 255, 0.7);
   z-index: 2;
   font-size: 12px;
   margin: 0;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .highlighter {
@@ -108,10 +97,6 @@ footer {
   z-index: 1;
   position: absolute;
   pointer-events: none;
-}
-canvas#canvas_before {
-  background-color: #ff8c00;
-  /* 変更：青緑系 → オレンジ */
 }
 
 .output_canvas {
@@ -127,32 +112,26 @@ canvas#canvas_before {
 .detectOnClick img {
   width: 100%;
 }
-
 /* 一般的なtableデザイン */
 table {
   border-collapse: collapse;
   width: 100%;
   margin: 0 auto;
 }
-
 table th {
-  background-color: #8b4513;
-  /* 変更：#072300 → ブラウン系 */
+  background-color: #072300;
   color: #fff;
   font-weight: bold;
   text-align: center;
   border: 1px solid #ccc;
   padding: 8px;
 }
-
 table td {
   border: 1px solid #ccc;
   padding: 8px;
-  background-color: #fff8e1;
-  /* 変更：white → ベージュ */
+  background-color: white;
   text-align: center;
 }
-
 th.sort-asc::after {
   content: " ▲";
 }
@@ -160,45 +139,30 @@ th.sort-asc::after {
 th.sort-desc::after {
   content: " ▼";
 }
-
-/* input type file のボタン */
+/* input  type file のボタン */
 input[type="file"] {
-  background-color: #ff8c00;
-  /* 変更：青緑系 → オレンジ */
+  background-color: #007f8b;
   color: #fff;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 input[type="file"]:disabled {
-  background-color: #ffe0b2;
-  /* 変更：#ddd → 明るいオレンジ/ベージュ */
+  background-color: #ddd;
   cursor: not-allowed;
 }
-
 .disabled-label {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 p,
 label {
-  font: 1rem 'Fira Sans', sans-serif;
+  font:
+    1rem 'Fira Sans',
+    sans-serif;
 }
 
 input {
   margin: 0.4rem;
-}
-
-/* 追加：button 要素にも同様のtransitionを追加 */
-button {
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-/* 追加：download 属性付きの <a> 要素にも同様のtransitionを追加 */
-a[download] {
-  transition: background-color 0.3s ease, transform 0.3s ease;
 }
